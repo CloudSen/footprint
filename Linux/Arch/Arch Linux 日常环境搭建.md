@@ -31,6 +31,8 @@ pacman -S yakuake
 ## Xmind 8
 
 > Xmind是java开发的，必须安装Java环境。见 [Arch Linux 开发环境配置]()。
+>
+> emmm。。。。不知道为什么，Ubuntu上能打开文件名有中文的文件，Arch上就只能打开纯英文命名的文件。。。
 
 画思维导图必备。  
 
@@ -41,10 +43,11 @@ cd ~/soft/xmind-8-update8-linux/XMind_amd64
 ./XMind
 ```
 
-注意！这里有个大坑！若打开时报错，则打开 `XMind_amd64/XMind.ini` ，在末尾追加一行
+注意！这里有个大坑！JDK8以上打开时报错，配置 `XMind_amd64/XMind.ini` ，在末尾追加以下内容：
 
 ```text
 --add-modules=ALL-SYSTEM
+--illegal-access=warn
 ```
 
 一定要注意！若系统默认java环境是JDK9，则会抛出ClassNotFoundException，换成JDK8或者修改 `XMind.ini` 就没报错，大概日志如下：  
