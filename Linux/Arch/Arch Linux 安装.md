@@ -37,11 +37,11 @@ timedatectl status
 
 可以看到如下输出：  
 
-![sys_time](D:\Note\MarkDown\Arch\img\1.png)  
+![sys_time](img/1.png)  
 
 目前时区还不对，要修改到上海：  
 
-![time_zone](D:\Note\MarkDown\Arch\img\2.png)  
+![time_zone](img/2.png)  
 
 ```shell
 # 查询所有时区，按q退出
@@ -54,7 +54,7 @@ timedatectl set-ntp true
 
 再次查询时间，可以看到local time已经正确：  
 
-![local_time](D:\Note\MarkDown\Arch\img\3.png)  
+![local_time](img/3.png)  
 
 ### 硬盘分区
 
@@ -72,7 +72,7 @@ timedatectl set-ntp true
 fdisk -l
 ```
 
-![disk_list](D:\Note\MarkDown\Arch\img\4.png)  
+![disk_list](img/4.png)  
 
 对sda硬盘进行操作：  
 
@@ -80,7 +80,7 @@ fdisk -l
 fdisk /dev/sda
 ```
 
-![fdisk](D:\Note\MarkDown\Arch\img\5.png)  
+![fdisk](img/5.png)  
 
 现在`fdisk`主要操作说明如下：  
 
@@ -91,13 +91,13 @@ fdisk /dev/sda
 
 主要操作如下图所示：  
 
-![fdisk1](D:\Note\MarkDown\Arch\img\6.png)  
+![fdisk1](img/6.png)  
 
 最后操作完毕后，输入`p`查看分区状况，确认无误后，输入`w`保存并退出：  
 
-![fdisk2](D:\Note\MarkDown\Arch\img\7.png)  
+![fdisk2](img/7.png)  
 
-![fdisk3](D:\Note\MarkDown\Arch\img\8.png)  
+![fdisk3](img/8.png)  
 
 然后对分好的区进行格式化：  
 
@@ -110,7 +110,7 @@ mkswap /dev/sda2
 swapon /dev/sda2
 ```
 
-![fdisk4](D:\Note\MarkDown\Arch\img\9.png)  
+![fdisk4](img/9.png)  
 
 最后挂载分区：
 
@@ -155,7 +155,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 vim /mnt/etc/fstab
 ```
 
-![fstab](D:\Note\MarkDown\Arch\img\10.png)  
+![fstab](img/10.png)  
 
 ### Chroot
 
@@ -187,7 +187,7 @@ vim /etc/locale.gen
 locale-gen
 ```
 
-![locale](D:\Note\MarkDown\Arch\img\11.png)  
+![locale](img/11.png)  
 
 使用VIM打开`/etc/locale.conf`文件，并在行首加入`LANG=en_US.UTF-8`。
 
@@ -245,7 +245,7 @@ grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-![grub](D:\Note\MarkDown\Arch\img\12.png)  
+![grub](img/12.png)  
 
 ### 退出CHROOT重启系统
 
@@ -256,7 +256,7 @@ reboot
 
 登陆自己的账号后，基本安装就结束了，接下来要安装`KDE`图形界面。  
 
-![login](D:\Note\MarkDown\Arch\img\13.png)  
+![login](img/13.png)  
 
 ### dhcp服务开机自启动
 
