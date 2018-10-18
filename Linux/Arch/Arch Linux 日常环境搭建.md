@@ -1,26 +1,95 @@
-# Arch Linux 日常环境搭建
+# Arch Linux 日常环境搭建  
+
+
 
 ## ZSH
 
-大名鼎鼎的 `ZSH` 就不解释了。还要安装后面的 `oh-my-zsh`
+大名鼎鼎的 `ZSH` 就不解释了。主要是安装后面的 `oh-my-zsh`
 
 ```bash
 sudo pacman -S zsh
+# 查看zsh是否安装完毕
+zsh --version
+# 将bash切换为zsh
+# 可以直接编辑passwd文件
+sudo vim /etc/passwd
+# 也可以这样
+sudo chsh -s $(which zsh)
 ```
+
+  
 
 ## robbyrussell/oh-my-zsh
 
-漂亮的主题，无脑zsh的推荐配置。
+`oh-my-zsh` 是用来管理 `zsh` 配置的框架，`zsh` 的默认配置及其复杂繁琐，而 `oh-my-zsh` 让 `zsh` 配置降到0门槛。而且它完全兼容 `bash`，并且提供了很多使用的插件和美观的主题。  
+
+### 安装
 
 ```bash
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
+![oh](img/26.png)  
+
+安装完毕后，在 `~` 目录生成新的 `.zshrc` 配置文件。  
+
+若有乱码，则安装powerline字体库：
+
+```bash
+cd ~/Downloads/
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts/
+./install.sh
+cd ..
+rm -rf fonts
+```
+
+### 插件与主题
+
+官方自带插件存放在：`~/.oh-my-zsh/plugins/  `
+
+第三方插件存放在：`~/.oh-my-zsh/custom/plugins/`  
+
+官方自带主题存放在：`~/.oh-my-zsh/themes/`  
+
+第三方主题存放在:  `~/.oh-my-zsh/custom/themes/`  
+
+### 配置
+
+修改 `.zshrc` ，加入以下内容，还有很多插件后期再介绍：  
+
+```bash
+# 修改主题
+ZSH_THEME="agnoster"
+
+# easy aliases
+alias zshconfig="mate ~/.zshrc"
+alias ohmyzsh="mate ~/.oh-my-zsh"
+alias getip="curl -i http://ip.cn"
+
+# Ibus
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
+# Terminal Proxy
+alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
+alias unsetproxy="unset ALL_PROXY"
+
+# Python virtualenv wrapper
+export WORKON_HOME=$HOME/work/python/virtual_env
+export PROJECT_HOME=$HOME/work/python/projects
+source /usr/bin/virtualenvwrapper.sh
 
 ```
 
 ![omz](img/25.png)  
 
+  
+
 ## Yakuake
 
-下拉式终端模拟，嗯，very nice。
+下拉式终端模拟，嗯，very nice。默认 `F12` 弹出下拉框。
 
 ```bash
 pacman -S yakuake
@@ -28,11 +97,15 @@ pacman -S yakuake
 
 ![yakuake](img/24.png)  
 
+  
+
 ## Xmind 8
 
 > Xmind是java开发的，必须安装Java环境。见 [Arch Linux 开发环境配置]()。
 >
 > emmm。。。。不知道为什么，Ubuntu上能打开文件名有中文的文件，Arch上就只能打开纯英文命名的文件。。。
+>
+> 请支持正版软件，学生购买有很大优惠，就一份steam游戏的钱。
 
 画思维导图必备。  
 
@@ -149,6 +222,8 @@ makepkg -si
 
    ![yay4](img/17.png)  
 
+  
+
 ## Typora
 
 ![ty1](img/18.png)  
@@ -159,6 +234,8 @@ MarkDown编辑神器，所见即所得。
 yay -S typora
 ```
 
+  
+
 ## 网易云音乐
 
 ```bash
@@ -167,6 +244,8 @@ yay -S netease-cloud-music
 # 可以搜索一下AUR库，有electron版本和终端版的
 yay netease-cloud-music
 ```
+
+  
 
 ## 系统代理
 
@@ -200,7 +279,13 @@ source ~/.zshrc
 
 ### 浏览器使用代理
 
-见下方的 `Google Chrome` 。
+见下方的 `Google Chrome` 。  
+
+### KDE桌面代理
+
+`System Settings` > NetWork中的`Settings` > `Proxy` > `Use manually specified proxy configurations` > 'SockS Proxy' 设置为 `127.0.0.1` ，端口 `1080`
+
+
 
 ## Google Chrome
 
@@ -249,7 +334,9 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 ![so3](img/22.png)  
 
-![so4](img/23.png)  
+![so4](img/23.png)    
+
+
 
 ## axel
 
@@ -277,7 +364,31 @@ sudo vim /etc/makepkg.conf
 yay -Syyu
 ```
 
+  
 
+## 字体
 
+```bash
+# 思源黑体 Noto Sans CJK TC ，TC是T Chinese
+yay -S ttf-noto
+# 文泉微米黑
+yay -S wqy-microhei
+# Android 之前用过的
+yay -S ttf-droid
+# Apple 的字体
+yay -S ttf-monaco
+```
 
+终端我用的Noto Sans Mono for Powerline。
 
+![font1](img/27.png)  
+
+chrome我设置的Noto Sans CJK TC。  
+
+![font2](img/28.png)  
+
+![font3](img/29.png)    
+
+编程字体 `monospaced`：  
+
+![font4](img/30.png)  
