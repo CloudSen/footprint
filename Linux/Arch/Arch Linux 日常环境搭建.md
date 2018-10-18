@@ -1,0 +1,280 @@
+# Arch Linux 日常环境搭建
+
+## ZSH
+
+大名鼎鼎的 `ZSH` 就不解释了。还要安装后面的 `oh-my-zsh`
+
+```bash
+sudo pacman -S zsh
+```
+
+## robbyrussell/oh-my-zsh
+
+漂亮的主题，无脑zsh的推荐配置。
+
+```bash
+
+```
+
+![omz](img/25.png)  
+
+## Yakuake
+
+下拉式终端模拟，嗯，very nice。
+
+```bash
+pacman -S yakuake
+```
+
+![yakuake](img/24.png)  
+
+## Xmind 8
+
+> Xmind是java开发的，必须安装Java环境。见 [Arch Linux 开发环境配置]()。
+
+画思维导图必备。  
+
+直接从官网下载 `.zip` 压缩包，解压到指定目录，然后执行 `/<解压路径>/xmind-8-update8-linux/XMind_amd64` 下面的XMind就可以运行了：  
+
+```bash
+cd ~/soft/xmind-8-update8-linux/XMind_amd64
+./XMind
+```
+
+注意！这里有个大坑！若打开时报错，则打开 `XMind_amd64/XMind.ini` ，在末尾追加一行
+
+```text
+--add-modules=ALL-SYSTEM
+```
+
+一定要注意！若系统默认java环境是JDK9，则会抛出ClassNotFoundException，换成JDK8或者修改 `XMind.ini` 就没报错，大概日志如下：  
+
+```java
+...
+Caused by: java.lang.NoClassDefFoundError: javax/annotation/PostConstruct
+	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:151)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.internalMake(InjectorImpl.java:375)
+	... 23 more
+Caused by: java.lang.ClassNotFoundException: javax.annotation.PostConstruct cannot be found by org.eclipse.e4.core.di_1.6.0.v20160319-0612
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:398)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:361)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:353)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:161)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:496)
+	... 25 more
+	...
+```
+
+新建 `.desktop` 文件，写入以下内容，就能创建快捷方式：
+
+```bash
+[Desktop Entry]
+Encoding=UTF-8
+Name=XMind
+Comment=xmind update 8
+Exec=/home/cloudsen/soft/xmind-8-update8-linux/xmind.sh
+Icon=/home/cloudsen/soft/xmind-8-update8-linux/XMind_icon.png
+Terminal=false
+StartupNotify=true
+Type=Application
+Categories=Application;Development;
+```
+
+新建启动脚本 `vim ~/soft/xmind-8-update8-linux/xmind.sh` 写入以下内容：
+
+```bash
+#!/bin/bash
+cd /home/cloudsen/soft/xmind-8-update8-linux/XMind_amd64/
+/home/cloudsen/soft/xmind-8-update8-linux/XMind_amd64/XMind
+```
+
+
+
+## yay
+
+> Yet Another Yogurt - An AUR Helper Written in Go
+
+`yaourt` 已经停更了， [yay](https://github.com/Jguer/yay) 是一款非常不错的AUR安装神器，使用 `GO` 语言编写而成，相当于将 `pacman` 进行了二次包装。  
+
+### 安装
+
+```bash
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+### 使用
+
+1. 替代 `pacman` 少打几个字母：
+
+   ```bash
+   yay -S <包名>
+   # 等同于
+   pacman -S <包名>
+   ```
+
+2. 搜索包，并选择性安装：
+
+   ```bash
+   yay <包名>
+   ```
+
+   ![yay1](img/14.png)  
+
+3. 打印系统状态：
+
+   ```bash
+   yay -Ps
+   ```
+
+   ![yay2](img/15.png)  
+
+4. 清除不需要的依赖包：
+
+   ```bash
+   yay -Yc
+   ```
+
+   ![yay3](img/16.png)  
+
+5. 检查并更新系统和安装的软件：
+
+   ```bash
+   yay -Syu
+   ```
+
+   ![yay4](img/17.png)  
+
+## Typora
+
+![ty1](img/18.png)  
+
+MarkDown编辑神器，所见即所得。
+
+```bash
+yay -S typora
+```
+
+## 网易云音乐
+
+```bash
+# 官方的
+yay -S netease-cloud-music
+# 可以搜索一下AUR库，有electron版本和终端版的
+yay netease-cloud-music
+```
+
+## 系统代理
+
+### ShadowSocksR
+
+> 你懂的socks5代理，推荐使用跨平台的electron-ssr，图形界面和订阅很方便。
+
+```bash
+yay electron-ssr
+```
+
+![ssr](img/19.png)  
+
+### 终端使用代理
+
+编辑 `~/.zshrc` ，加入以下 `alias` ：
+
+```text
+alias getip="curl -i http://ip.cn"
+alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
+alias unsetproxy="unset ALL_PROXY"
+```
+
+然后更新设置：
+
+```bash
+source ~/.zshrc
+```
+
+需要代理的时候就 `setproxy` ，不需要的时候 `unsetproxy` ，查看当前ip地址 `getip` 。
+
+### 浏览器使用代理
+
+见下方的 `Google Chrome` 。
+
+## Google Chrome
+
+### 安装
+
+Chrome有三个版本 `Beta` `Dev` `Stable` ，看自己喜好下载。  
+
+```bash
+yay google-chrome
+```
+
+### 使用
+
+#### 以代理方式启动
+
+> 用于首次帐号登录，同步书签和扩展插件
+>
+> 确保代理已启动！
+
+```bash
+google-chrome-stable --proxy-server="socks5://127.0.0.1:1080"
+```
+
+#### 使用SwitchyOmega插件
+
+
+首先设置自己的本地代理端口如图：
+
+![so1](img/20.png)  
+
+然后配置 `auto switch`，注意图中红色部分，将GFWLIST填入：  
+
+```text
+https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+```
+
+
+
+![so2](img/21.png)  
+
+配置好后，该插件会根据规则自动选择使用代理还是直连。  
+
+如果遇到规则里面没有，且打不开的情况，就手动将该网站加入规则中：
+
+选择 `add condition`    
+
+![so3](img/22.png)  
+
+![so4](img/23.png)  
+
+## axel
+
+多线程下载神器，`pacman` 和 `yay` 默认都是单线程下载的，通过 `axel` 实现多线程下载。  
+
+```bash
+yay axel
+```
+
+配置 `pacman.conf` ：  
+
+```bash
+sudo vim /etc/pacman.conf
+    # 配置 XferCommand
+    XferCommand = /usr/bin/axel -a -n 16 %u -o %o
+sudo pacman -Syyu
+```
+
+配置 `makepkg.conf` ，让AUR资源使用多线程：
+
+```bash
+sudo vim /etc/makepkg.conf
+	# 将http::/usr/bin/curl改为下面这行
+	'http::/usr/bin/axel -a -n 16 %u -o %o'
+yay -Syyu
+```
+
+
+
+
+
