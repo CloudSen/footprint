@@ -392,3 +392,13 @@ chrome我设置的Noto Sans CJK TC。
 编程字体 `monospaced`：  
 
 ![font4](img/30.png)  
+
+
+
+## Win10&Linux双系统，系统时间问题
+  
+WIN10和Linux系统同时安装后，会发现WIN的时间比实际时间早了8小时。  
+在WINDOWS中管理员方式运行 `PowerShell` ,键入以下内容后 `重启` ，即可修复：  
+```bash
+Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+```  
