@@ -97,7 +97,7 @@ pacman -S yakuake
 
 ![yakuake](img/24.png)  
 
-  
+  点击这里下载[Yakuake-Material主题](https://store.kde.org/p/1229144/)，下载完毕后，进入Yakuake `Configure Yakuake->Appearance` 安装主题。
 
 ## Xmind 8
 
@@ -396,9 +396,9 @@ chrome我设置的Noto Sans CJK TC。
 
 
 ## Win10&Linux双系统，系统时间问题
-  
+
 WIN10和Linux系统同时安装后，会发现WIN的时间比实际时间早了8小时。  
 在WINDOWS中管理员方式运行 `PowerShell` ,键入以下内容后 `重启` ，即可修复：  
 ```bash
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
-```  
+```
