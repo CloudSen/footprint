@@ -1,5 +1,7 @@
 # Arch Linux 日常环境搭建  
 
+![background](img/29.png)  
+
 
 
 ## ZSH
@@ -97,7 +99,11 @@ pacman -S yakuake
 
 ![yakuake](img/24.png)  
 
-  点击这里下载[Yakuake-Material主题](https://store.kde.org/p/1229144/)，下载完毕后，进入Yakuake `Configure Yakuake->Appearance` 安装主题。
+  点击这里下载[Yakuake-Material主题](https://store.kde.org/p/1229144/)，下载完毕后，进入Yakuake `Configure Yakuake->Appearance` 安装主题。  
+
+![29](img/31.png)  
+
+
 
 ## Xmind 8
 
@@ -383,7 +389,7 @@ yay -Syyu
 yay -S ttf-noto
 # 文泉微米黑
 yay -S wqy-microhei
-# Android 之前用过的
+# Android 的字体
 yay -S ttf-droid
 # Apple 的字体
 yay -S ttf-monaco
@@ -393,11 +399,9 @@ yay -S ttf-monaco
 
 ![font1](img/27.png)  
 
-chrome我设置的Noto Sans CJK TC。  
+chrome我设置的文泉微米黑。  
 
-![font2](img/28.png)  
-
-![font3](img/29.png)    
+![font2](img/28.png)  ​    
 
 编程字体 `monaco`：  
 
