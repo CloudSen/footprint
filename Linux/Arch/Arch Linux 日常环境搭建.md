@@ -380,6 +380,38 @@ yay -Syyu
 
 
 
+## Open SSH
+
+使用ssh协议，通过网络和加密通道进行计算器之间的连接通信。  
+
+```bash
+yay openssh
+```
+
+连接到某服务器：  
+
+```bash
+ssh -p <ssh端口> <用户名>@<ip地址>
+```
+
+设置常用连接，添加~/.ssh/config：  
+
+```
+# host-specific options
+Host blogvps
+	HostName <ip地址>
+	Port     <ssh端口>
+	User     <用户名>
+```
+
+做如上配置后，可以便捷连接：  
+
+```bash
+ssh blogvps
+```
+
+
+
 ## 字体
 
 > 更多Linux字体美化见[Linux下终极字体配置方案](https://ohmyarch.github.io/2017/01/15/Linux%E4%B8%8B%E7%BB%88%E6%9E%81%E5%AD%97%E4%BD%93%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88/)
