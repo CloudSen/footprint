@@ -107,11 +107,30 @@ cloudsen
 
 ## 建站基础#3 SSH
 
-> 扩展阅读：
+> 本节参考资料：
 >
 > - [Arch Linux Wiki - SSH](https://wiki.archlinux.org/index.php/Secure_Shell_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
 > - [Arch Linux Wiki - SSH keys](https://wiki.archlinux.org/index.php/SSH_keys_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#.E9.80.89.E6.8B.A9.E5.90.88.E9.80.82.E7.9A.84.E5.8A.A0.E5.AF.86.E6.96.B9.E5.BC.8F)
-> - [How to set up SSH keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1604)
+>
+> 本节参考博文：
+>
+> > 作者：Hanif Jetha
+> >
+> > 连接：[How to set up SSH keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1604)
+> >
+> > 发布于：digitalocean
+>
+> > 作者：rabexc
+> >
+> > 连接：[using ssh agent](http://rabexc.org/posts/using-ssh-agent)
+> >
+> > 发布于：rabexc.org
+>
+> > 作者：EdCates
+> >
+> > 连接：[ssh-agent under Plasma 5](https://bbs.archlinux.org/viewtopic.php?id=193311)
+> >
+> > 发布于：Arch Wiki
 
 ### 通过SSH连接服务器
 
@@ -390,9 +409,153 @@ Host ali-cloudsen
     IdentityFile  ~/.ssh/id_rsa_ali
 ```
 
-然后把公匙分别放到不同的远程服务器上，这样就实现了本地用不同的密匙认证不同的SSH连接。  
+然后把公匙分别放到不同的远程服务器上，这样就实现了本地用不同的密匙认证不同的SSH连接。 
+
+##### 更加安全的配置
+
+因为只是个人服务器，没有必要做过于复杂的安全设置，自行扩展吧：  
+
+- 加入 [Google Authenticator](https://wiki.archlinux.org/index.php/Google_Authenticator)来进行二次认证
+- 保证服务器 authorized_keys 文件的安全，将authorized_keys的权限设置为对拥有者只读，其他用户没有任何权限
 
 ### SSH agent的使用
 
+#### SSH代理的作用
 
+`ssh-agent` 是OpenSSH自带的用于提高效率的工具，大致的功能如下：
 
+1. 免去每次都要输入私匙密码短语的烦恼
+2. 免去手动指定每个远程服务对应的私匙
+3. 可用于管理私匙应用于 `git` 、`rsync` 、`scp` 等
+4. 代理转发ForwardAgent【非常棒的功能】  
+
+#### SSH 代理的基本用法
+
+##### 运行agent
+
+```bash
+# 创建子shell，在子shell中运行agent进程
+$ eval 'ssh-agent'
+# 单独启动一个agent进程
+$ ssh-agent $SHELL
+# 或者在.bashrc中加入
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval `ssh-agent`
+    ssh-add
+fi
+```
+
+##### 添加私匙到代理
+
+```bash
+# 永久代理
+ssh-add ~/.ssh/<你的私匙>
+# 定时代理
+ssh-add -t <秒数> ~/.ssh/<你的私匙>
+```
+
+##### 查看当前代理中已存在的密匙
+
+```bash
+# 查看代理中的私匙
+ssh-add -l
+# 查看代理中的私匙对应的公匙
+ssh-add -L
+```
+
+##### 删除已代理的私匙
+
+```
+ssh-add -d ~/.ssh/<你的私匙>
+# 删除全部
+ssh-add -D
+```
+
+##### 关闭agent
+
+```bash
+ssh-agent -k
+```
+
+ 
+
+注意，这样手动操作都是有问题的，每次都会产生一个 `ssh-agent` 实例，并在会话期间一直运行，若忘记关闭，不久之后，您的系统中就会有多个根本不再需要的 `ssh-agent` 进程在运行，只有重启后它们才会关闭。  
+
+如今，很多操作Linux发行版，当你登录的时候，就会启动一个系统控制的ssh-agent，直接用它就好不需要再开启新的agent。  
+
+这里是针对KDE5的额外内容，KDE5没有自动启动一个可用的ssh-agent，需要进行以下设置。  
+
+新建~/.config/plasma-workspace/env/ssh-agent-startup.sh：
+
+```
+#!/bin/sh
+[ -n "$SSH_AGENT_PID" ] || eval "$(ssh-agent -s)"
+```
+
+新建 ~/.config/plasma-workspace/shutdown/ssh-agent-shutdown.sh：
+
+```
+#!/bin/sh
+[ -z "$SSH_AGENT_PID" ] || eval "$(ssh-agent -k)"
+```
+
+这样设置后，开机时就不用再手动启动agent进程了。
+
+#### SSH 代理的应用
+
+##### 思考1
+
+本地电脑A，远程服务器B，还有一个网关(gateway)服务器C，现在若A不能连接到B，需要先连接到C然后才能连接到B，并且整个连接过程只允许密匙的方式。  
+
+因为A最终与B和C都建立了连接，那么就需要把A的公匙发送到B和C的authorized_keys中。然后A通过SSH keys连接到B，这一步没问题。现在再从B连接到C，这一步就出问题了，因为B上没有A的私匙，无法和C中的公匙进行认证，导致连接失败。怎么办呢？难道要把A的私匙发一份给B吗？NO！这样是极其危险的做法，我们一定要记得，私匙只能由我们自己保管。  
+
+##### 思考2
+
+我们在使用 `git` ，`rsync` 这些工具的时候，也需要用到SSH，那怎么让git知道我们的密匙呢？  
+
+##### 使用代理转发解决多个服务器之间的认证
+
+添加私匙到代理，添加时需输入当前私匙的密码短语：  
+
+```bash
+# 设置私匙代理生命周期为3小时，3小时后删除代理中的该私匙，偷懒的话就不要加-t参数，永久代理。
+$ ssh-add -t 10800 ~/.ssh/id_rsa
+Enter passphrase for /home/cloudsen/.ssh/id_rsa: 
+Identity added: /home/cloudsen/.ssh/id_rsa (cloudsen@GLaDOS)
+Lifetime set to 10800 seconds
+```
+
+代理私匙后，我们不再需要在 `~/.ssh/config` 中指定IdentifyFile了，代理会根据公匙自动选择对应的私匙，在连接时也不需要输入私匙密码短语，非常方便。  
+
+然后再配置**每台电脑的** `~/.ssh/config` ，让SSH客户端支持代理转发，加入以下配置：  
+
+```
+Host *
+    ForwardAgent yes
+```
+
+测试一下 `ssh blogvps-cloudsen` 直接就连上服务器了。然后再连接到另外一台服务器也不需要输入任何信息，agent已经转发我们的私匙，可以直接在远程服务器认证本地电脑的私匙。
+
+##### github使用SSH agent
+
+将生成的用于github的公匙，复制到github[设置页面](https://github.com/settings/keys)上：  
+
+```bash
+cat .ssh/id_rsa_github.pub
+```
+
+然后将github的私匙给agent代理：  
+
+```bash
+ssh-add ~/.ssh/id_rsa_github
+```
+
+然后测试是否成功连接github：  
+
+```bash
+ssh -T git@github.com
+Warning: Permanently added the RSA host key for IP address '13.229.188.59' to the list of known hosts.
+Hi CloudSen! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+若出现你的用户名，说明可以使用SSH PULL PUSH代码了！
