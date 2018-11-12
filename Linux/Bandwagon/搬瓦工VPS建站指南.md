@@ -2,7 +2,7 @@
 
 > 本地用的Arch Linux，搬瓦工安装的Ubuntu 18
 
-本指南的目的，并非仅仅是含糊的介绍如何快速建站。而是通过每一步详细的讲解，提高Linux的技能水平，在以后的操作中得心应手。
+本指南的目的，并非仅仅是含糊地介绍如何快速建站。而是通过每一步详细的讲解，提高Linux的技能水平，在以后的操作中得心应手。
 
 ## 建站基础#1 KiwiVM基本配置
 
@@ -14,7 +14,7 @@
 
 ### Main controls 系统状态监控
 
-这里能看到系统内存和交换区的占用、IP地址、SSH端口、运行状态、硬盘容量等信息。  
+这里能看到系统内存和交换区的占用、IP地址、SSH端口、运行状态、硬盘容量等信息。并且可以执行关机，开机等操作。  
 
 ![main](imgs/maincontrols.png)  
 
@@ -26,7 +26,7 @@
 
 ### 网页版终端操作
 
-`Root shell -basic` 和 `Root shell -advanced` 和 `Root shell -interactive` 都是用来执行指令的，但一般不使用，都是用OpenSSH或者ssh GUI客户端。  
+`Root shell -basic` 和 `Root shell -advanced` 和 `Root shell -interactive` 都是用来执行命令行的，但一般不使用，都是用OpenSSH或者SSH GUI客户端。  
 
 ### Install new OS更换系统
 
@@ -36,17 +36,17 @@
 
 ### Two-factor authentication 二次验证
 
-每当进入KiwiVM时，都会要求输入二次验证码，这里支持 `Google身份验证` 和手机短信验证。  
+每当进入KiwiVM时，可以设置输入二次验证码，这里支持 `Google身份验证` 和手机短信验证。  
 
 ![2auth](imgs/twoauth.png)  
 
 ### Root password modification ROOT密码修改
 
-改root密码前，需要在Main Controls中stop服务器。并且只能随机生成密码。  
+改root密码前，需要在Main Controls中stop服务器。并且只能生成随机密码。  
 
 ### KiwiVM password modification KiwiVM登录密码修改
 
-  这里可以随意修改KiwiVM登录密码。
+这里可以随意修改KiwiVM登录密码。
 
 ### Migration 数据迁移
 
@@ -68,7 +68,7 @@
 
 ### 新增普通用户
 
-root用户潜在危害极大，需要建立普通用户进行权限限制。  
+root用户的潜在危害极大，需要使用 ` adduser` 新增普通用户进行权限限制。  
 
 ```bash
 root@ubuntu:~# adduser cloudsen
@@ -94,11 +94,11 @@ root@ubuntu:/home# ls
 cloudsen
 ```
 
-使用 `adduser` 后，分配了组和用户目录。日常可以使用该用户登录系统。  
+使用 `adduser` 后，设置了密码，分配了组和用户目录等信息。日常可以使用该用户登录系统。  
 
 ### 推荐工具
 
-以下是一些实用的软件工具：
+以下是一些实用的服务器端软件工具：
 
 - VIM 文本编辑器
 - htop 系统资源监控软件
@@ -142,13 +142,13 @@ cloudsen
 yay -S openssh
 ```
 
-这里提以下SSH的几个路径和配置文件：  
+这里提一下SSH的几个路径和配置文件：  
 
-- `~/.ssh/` 当前用户域下的.ssh文件存放的是该用户的ssh配置和密匙
-- `~/.ssh/config` 配置连接信息，用于分类管理和便捷操作 
-- `~/.ssh/id_rsa 和 ~/.ssh/id_rsa.pub` 默认的公匙密匙文件
+- `~/.ssh/` 当前用户域下的.ssh文件夹存放的是该用户的ssh配置和密匙
+- `~/.ssh/config` 配置连接会话信息，用于分类管理和便捷操作 
+- `~/.ssh/id_rsa 和 ~/.ssh/id_rsa.pub` 默认的公匙私匙文件名
 - `~/.ssh/known_hosts` 存放连接过的服务器的公钥指纹
-- `/etc/ssh/sshd_config` 系统的sshd服务配置，sshd服务使用SSH协议可以用来进行远程控制，针对SSH服务端
+- `/etc/ssh/sshd_config` 系统的sshd服务配置，sshd服务使用SSH协议来进行远程控制，它针对SSH服务端
 - `/etc/ssh/ssh_config` 系统针对SSH客户端的配置
 
 #### 以密码方式连接
@@ -165,22 +165,22 @@ ssh -p <远程ssh端口> <用户名>@<远程IP地址>
 
 ```
 Host blogvps
-	HostName <远程IP地址>
-	Port     <远程SSH端口>
-	User     <远程用户名>
+    HostName <远程IP地址>
+    Port     <远程SSH端口>
+    User     <远程用户名>
 ```
 
-这样一来，直接输入 `ssh blogvps` 就能连接服务器了。  
+这样一来，直接输入 `ssh blogvps` 然后输入密码，就能连接服务器了。  
 
 #### 以密匙方式连接
 
  `密匙对` 使用非对称加密，提供了一个更简单、安全的方式去连接服务器，被连接的一方保存公匙，连接的一方保存私匙。  
 
-大概的登录流程简单来说是这样的：  
+大概的登录流程，简单来说是这样的：  
 
 - 远程服务器发现有用户登录时，通过 `公匙` 生成字符串，`加密` 后发送给用户
 - 用户收到字符串后，通过 `私匙` 对字符串 `解密` ，然后返回给远程服务器
-- 在用户解密的同时，远程服务器也在用 `公匙` 对字符串 `解密`，若得到的字符串与用户发来的的相同，则认证成功
+- 远程服务器进行判断，若返回的字符串与自己生成的相同，则认证成功，反之认证失败
 
 现在我们要连接远程服务器，那么就要把公匙发过去，自己保留私匙。同理GIT HUB也支持SSH方式连接，GIT HUB保留的也是公匙。  
 
@@ -189,6 +189,8 @@ Host blogvps
 现在我使用本地Arch Linux生成SSH私匙和公匙，执行 `ssh-keygen` 得到以下输出：  
 
 ```bash
+ssh-keygen
+
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/cloudsen/.ssh/id_rsa): 
 Enter passphrase (empty for no passphrase): 
@@ -216,7 +218,7 @@ ls
 >> config  id_rsa  id_rsa.pub  known_hosts
 ```
 
-`ssh-keygen` 默认是生成 `SHA256` 长度为2048-bit的RSA密匙，平常来说够用了。默认私匙的保存路径是 `/<用户>/.ssh/id_rsa` ，公匙的保存路径是 `/<用户>/.ssh/id_rsa.pub` 。生成的过程中请务必输入 `passphrase密码短语` 获得更安全的保障。  
+`ssh-keygen` 默认是生成 `SHA256` 长度为2048-bit的RSA密匙，平常来说够用了。**我们可以自定义密匙的保存路径和文件名**，默认私匙的保存路径是 `/<用户>/.ssh/id_rsa` ，公匙的保存路径是 `/<用户>/.ssh/id_rsa.pub` 。生成的过程中请务必输入 `passphrase密码短语` 获得更安全的保障。  
 
 > 务必确保公匙和私匙的权限是正确的，id_rsa是600，id_rsa.pub是644
 
@@ -225,7 +227,10 @@ ls
 方式有很多种，这里介绍最方便的，使用 `ssh-copy-id` 直接将本地的 `id_rsa.pub` 复制到远程服务器的 `/root/.ssh/authorized_keys` 文件中。为什么远程服务器上公匙要重命名？不急，下面会提到。执行以下指令：  
 
 ```bash
+# 发送默认的公匙id_rsa.pub
 ssh-copy-id -p <远程SSH端口> <用户名>@<远程IP>
+# 发送指定的公匙
+ssh-copy-id -i <公匙路径> -p <远程SSH端口> <用户名>@<远程IP>
 ```
 
 输出信息如下：  
@@ -240,7 +245,7 @@ Now try logging into the machine, with:   "ssh -p 'xxxx' 'root@xxx.xxx.xx.xxx'"
 and check to make sure that only the key(s) you wanted were added.
 ```
 
-然后检查远程服务器中是否收有名叫 `authorized_keys` 权限为 `rw` 的公匙：  
+然后检查远程服务器中是否收到名叫 `authorized_keys` 权限为 `rw` 的公匙：  
 
 ```bash
 root@ubuntu:~/.ssh# ls -la
@@ -254,20 +259,20 @@ drwx------ 6 root root 4096 Nov 11 10:09 ..
 
 ##### 使用密匙连接
 
- 打开 `/etc/ssh/sshd_config` 文件，去掉如以下配置的注释：  
+ 打开 `/etc/ssh/sshd_config` 文件，去掉以下配置的注释：  
 
 ```
 PubkeyAuthentication yes
 ```
 
-再次连接我们的远程服务器，看到提示信息变为了：  
+再次连接我们的远程服务器，看到提示信息变成了：  
 
 ```bash
 ssh blogvps
 Enter passphrase for key '/home/cloudsen/.ssh/id_rsa':
 ```
 
-这里输入刚刚设置的私匙密码短语，就能连接了，不用再输入搬瓦工自动生成的复杂密码了~！若之前生成密匙的时候，没有输入密码短语，这一步就跳过，直接连接成功。  
+这里输入刚刚设置的**私匙密码短语**，就能连接了，不用再输入搬瓦工自动生成的复杂密码了~！若之前生成密匙的时候，没有输入密码短语，这一步就跳过，直接连接成功。  
 
 等等，为什么远程端的公匙要命名为authorized_keys呢？在 `/etc/ssh/sshd_config`中可以看到：  
 
@@ -276,7 +281,7 @@ Enter passphrase for key '/home/cloudsen/.ssh/id_rsa':
 #AuthorizedKeysFile     .ssh/authorized_keys .ssh/authorized_keys2
 ```
 
-配置中指定的文件名默认是authorized_keys，它存放了所有认证的公匙信息和用户信息，以后若还要添加其他公匙，就在这个文件里面追加。  
+配置中指定的文件名默认是authorized_keys，它存放了所有认证的公匙信息和用户信息，若以后还要添加其他公匙，就在这个文件里面追加。  
 
 ### 增加SSH的安全
 
@@ -284,7 +289,7 @@ Enter passphrase for key '/home/cloudsen/.ssh/id_rsa':
 
 经过以上的设置，我们能够使用自己的电脑，通过SSH，以密码或者密匙的方式，来远程连接服务器，并登录ROOT用户。读这句话的时候，有几点不太合理：  
 
-1. 现在只能进行一对一的连接，如果有多个用户要连接远程服务器，公匙怎么存放才合理呢？
+1. 现在只能进行一对一的连接，如果有多个用户连接远程服务器，公匙怎么存放才合理呢？
 2. 如果本地有很多不同的私匙，怎么指定远程认证用哪个私匙呢？？
 3. 密码登录不安全，可以被暴力破解，要禁止，应该只允许密匙认证；
 4. ROOT用户权限太大，极其不安全，应该禁止SSH登录ROOT用户；
@@ -299,21 +304,21 @@ Enter passphrase for key '/home/cloudsen/.ssh/id_rsa':
 >
 > 每个人分别在自己电脑上生成自己的公匙和密匙，
 >
-> 然后再分别上传公匙到自己的普通用户目录下。
+> 然后再分别上传公匙到自己的远程普通用户目录下。
 
 现在开始所有的SSH只允许普通用户连接，修改本地 `~/.ssh/config`：  
 
 ```
-# 之前root用户的配置
+# root用户的配置
 Host blogvps-root
     HostName <远程IP地址>
-	Port     <远程SSH端口>
-	User     root
+    Port     <远程SSH端口>
+    User     root
 
 # 新增你自己的普通用户配置
 Host blogvps-cloudsen
     HostName <远程IP地址>
-	Port     <远程SSH端口>
+    Port     <远程SSH端口>
     User     cloudsen
 ```
 
@@ -341,13 +346,13 @@ drwxr-xr-x 4 cloudsen cloudsen 4096 Nov 11 11:58 ..
 -rw-r--r-- 1 cloudsen cloudsen  397 Nov 11 11:58 id_rsa.pub
 ```
 
-若你需要在不同的设备上远程连接，那么在每个设备上都执行一次以上操作，服务器上你的 `authorized_keys` 文件会记录所有认证的公匙信息。
+若你需要在不同的设备上远程连接，那么在每个设备上都执行一次以上操作，服务器上的 `authorized_keys` 文件会记录所有认证的公匙信息。
 
-##### 禁止ROOT用户远程登录，禁止密码登录
+##### 服务器配置禁止ROOT用户远程登录，禁止密码登录
 
 > 因为还用不到自动化运维，所以直接禁止ROOT远程登录，更好的做法是限制ROOT登录。
 
-远程登录到root用户，然后修改系统 `/etc/ssh/sshd_config` 配置： 
+远程登录到root用户，然后修改系统 `/etc/ssh/sshd_config` 的配置： 
 
 ```
 # 禁止密码登录，强制公钥验证
@@ -356,13 +361,13 @@ PasswordAuthentication	no
 PermitRootLogin no
 ```
 
-保存后，执行 `service sshd restart` 重启SSH服务，然后退出登录，再用SSH登录ROOT，会提示 `Permission denied` 。  
+保存后，执行 `service sshd restart` 重启sshd服务，然后退出登录，再用SSH登录ROOT，会提示 `Permission denied` 。  
 
-若以后又来了新人管理服务器，那么他首次只能以密码方式登录，这个时候依然提示 `Permission denied` 。此时需要使用root权限，修改sshd_config配置，允许密码登录，然后等新人将自己的公匙放到自己的普通用户目录下后，再禁止密码登录。  
+若以后又来了新人管理服务器，那么他首次只能以密码方式登录，这个时候依然提示 `Permission denied` 。此时需要使用root权限，修改sshd_config配置，恢复允许密码登录，然后等新人将自己的公匙放到自己的普通用户目录下后，再禁止密码登录。  
 
 ##### 为不同的远程连接指定不同的私匙认证
 
-为了安全和可维护性起见，我们应该为不同的远程服务创建不同的密匙对，`~/.ssh/config` 就是用来管理SSH会话的。比如现在我要以SSH的方式使用阿里云的服务器，那就要重新生成一对名叫 `id_rsa_ali` 的密匙：  
+为了安全和可维护性，我们应该为不同的远程服务创建不同的密匙对，`~/.ssh/config` 就是用来管理SSH会话的。比如现在我要以SSH的方式使用阿里云的服务器，那就要重新生成一对名叫 `id_rsa_ali` 的密匙：  
 
 ```bash
 ssh-keygen
@@ -397,14 +402,14 @@ ls -la
 # 搬瓦工普通用户配置
 Host blogvps-cloudsen
     HostName <远程IP地址>
-	Port     <远程SSH端口>
+    Port     <远程SSH端口>
     User     cloudsen
     IdentityFile  ~/.ssh/id_rsa
     
 # 阿里云普通用户配置
 Host ali-cloudsen
-	HostName <远程IP地址>
-	Port     <远程SSH端口>
+    HostName <远程IP地址>
+    Port     <远程SSH端口>
     User     cloudsen
     IdentityFile  ~/.ssh/id_rsa_ali
 ```
@@ -413,20 +418,20 @@ Host ali-cloudsen
 
 ##### 更加安全的配置
 
-因为只是个人服务器，没有必要做过于复杂的安全设置，自行扩展吧：  
+目前只是个人服务器，没有必要做过于复杂的安全设置，自行扩展吧：  
 
-- 加入 [Google Authenticator](https://wiki.archlinux.org/index.php/Google_Authenticator)来进行二次认证
+- 私匙加入 [Google Authenticator](https://wiki.archlinux.org/index.php/Google_Authenticator)来进行二次认证
 - 保证服务器 authorized_keys 文件的安全，将authorized_keys的权限设置为对拥有者只读，其他用户没有任何权限
 
 ### SSH agent的使用
 
 #### SSH代理的作用
 
-`ssh-agent` 是OpenSSH自带的用于提高效率的工具，大致的功能如下：
+`ssh-agent` 是OpenSSH自带的用于提高效率和安全性的工具，大致的功能如下：
 
 1. 免去每次都要输入私匙密码短语的烦恼
-2. 免去手动指定每个远程服务对应的私匙
-3. 可用于管理私匙应用于 `git` 、`rsync` 、`scp` 等
+2. 免去在 `~/.ssh/config ` 中配置每个远程服务对应的私匙
+3. 可将私匙应用于 `git` 、`rsync` 、`scp` 等服务
 4. 代理转发ForwardAgent【非常棒的功能】  
 
 #### SSH 代理的基本用法
@@ -450,7 +455,7 @@ fi
 ```bash
 # 永久代理
 ssh-add ~/.ssh/<你的私匙>
-# 定时代理
+# 定时代理，超时后不再代理
 ssh-add -t <秒数> ~/.ssh/<你的私匙>
 ```
 
@@ -479,11 +484,11 @@ ssh-agent -k
 
  
 
-注意，这样手动操作都是有问题的，每次都会产生一个 `ssh-agent` 实例，并在会话期间一直运行，若忘记关闭，不久之后，您的系统中就会有多个根本不再需要的 `ssh-agent` 进程在运行，只有重启后它们才会关闭。  
+注意，这样手动操作都是有问题的，每次都会产生一个 `ssh-agent` 实例，并在会话期间一直运行，若忘记关闭，不久之后，你的系统中就会有多个根本不再需要的 `ssh-agent` 进程在运行，只有重启后它们才会关闭。  
 
-如今，很多操作Linux发行版，当你登录的时候，就会启动一个系统控制的ssh-agent，直接用它就好不需要再开启新的agent。  
+如今，很多Linux发行版，当你登录的时候，就会启动一个系统控制的ssh-agent，直接用它就好，不需要再开启新的agent，直接使用 `ssh-add` 就好。
 
-这里是针对KDE5的额外内容，KDE5没有自动启动一个可用的ssh-agent，需要进行以下设置。  
+以下是针对KDE5的额外内容，KDE5没有自动启动一个可用的ssh-agent，需要进行以下设置。  
 
 新建~/.config/plasma-workspace/env/ssh-agent-startup.sh：
 
@@ -499,15 +504,15 @@ ssh-agent -k
 [ -z "$SSH_AGENT_PID" ] || eval "$(ssh-agent -k)"
 ```
 
-这样设置后，开机时就不用再手动启动agent进程了。
+这样设置后，就不用手动启动agent进程了。  
 
 #### SSH 代理的应用
 
 ##### 思考1
 
-本地电脑A，远程服务器B，还有一个网关(gateway)服务器C，现在若A不能连接到B，需要先连接到C然后才能连接到B，并且整个连接过程只允许密匙的方式。  
+本地电脑A，远程服务器B，还有一个网关(gateway)服务器C，若A不能连接到B，需要先连接到C，然后才能连接到B，并且整个连接过程只允许密匙的方式。  
 
-因为A最终与B和C都建立了连接，那么就需要把A的公匙发送到B和C的authorized_keys中。然后A通过SSH keys连接到B，这一步没问题。现在再从B连接到C，这一步就出问题了，因为B上没有A的私匙，无法和C中的公匙进行认证，导致连接失败。怎么办呢？难道要把A的私匙发一份给B吗？NO！这样是极其危险的做法，我们一定要记得，私匙只能由我们自己保管。  
+因为A最终与B和C都建立了连接，那么就需要把A的公匙发送到B和C的authorized_keys中。然后A通过SSH keys连接到B，这一步没问题。现在再从B连接到C，这一步就出问题了，因为B上没有A的私匙，无法和C中的公匙进行认证，导致连接失败。怎么办呢？难道要把A的私匙发一份给B吗？NO！这样是极其危险的做法，我们一定要记得，**私匙只能由我们自己保管**。  
 
 ##### 思考2
 
@@ -525,7 +530,7 @@ Identity added: /home/cloudsen/.ssh/id_rsa (cloudsen@GLaDOS)
 Lifetime set to 10800 seconds
 ```
 
-代理私匙后，我们不再需要在 `~/.ssh/config` 中指定IdentifyFile了，代理会根据公匙自动选择对应的私匙，在连接时也不需要输入私匙密码短语，非常方便。  
+代理私匙后，我们不再需要在 `~/.ssh/config` 中指定IdentifyFile了，**代理会根据公匙自动选择对应的私匙**，在连接时也不需要输入私匙密码短语，非常方便。  
 
 然后再配置**每台电脑的** `~/.ssh/config` ，让SSH客户端支持代理转发，加入以下配置：  
 
@@ -534,13 +539,20 @@ Host *
     ForwardAgent yes
 ```
 
-测试一下 `ssh blogvps-cloudsen` 直接就连上服务器了。然后再连接到另外一台服务器也不需要输入任何信息，agent已经转发我们的私匙，可以直接在远程服务器认证本地电脑的私匙。
+测试一下 `ssh blogvps-cloudsen` 直接就连上服务器了。然后再连接到另外一台服务器也不需要输入任何信息，agent已经转发我们的私匙代理，可以直接在远程服务器认证本地电脑的私匙。
 
 ##### github使用SSH agent
 
-将生成的用于github的公匙，复制到github[设置页面](https://github.com/settings/keys)上：  
+github默认使用HTTPS的方式托管代码，这种方式每次push都要输入用户和密码，若要记住密码则在git全局变量中加入以下配置:  
+
+```
+git config --global credential.helper store
+```
+
+将生成的github公匙，复制到github[设置页面](https://github.com/settings/keys)上：  
 
 ```bash
+ssh-keygen
 cat .ssh/id_rsa_github.pub
 ```
 
@@ -550,7 +562,7 @@ cat .ssh/id_rsa_github.pub
 ssh-add ~/.ssh/id_rsa_github
 ```
 
-然后测试是否成功连接github：  
+然后测试是否能连接github：  
 
 ```bash
 ssh -T git@github.com
@@ -558,9 +570,9 @@ Warning: Permanently added the RSA host key for IP address '13.229.188.59' to th
 Hi CloudSen! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-若出现你的用户名，说明可以使用SSH PULL PUSH代码了！  
+若出现你的github用户名，说明可以使用SSH PULL PUSH代码了！  
 
-修改已存在git项目的url：  
+最后修改已存在git项目的url：  
 
 ```bash
 git remote set-url origin git@github.com:<github用户名>/<项目名>.git
