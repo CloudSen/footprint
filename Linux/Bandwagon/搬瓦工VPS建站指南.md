@@ -558,4 +558,11 @@ Warning: Permanently added the RSA host key for IP address '13.229.188.59' to th
 Hi CloudSen! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
-若出现你的用户名，说明可以使用SSH PULL PUSH代码了！
+若出现你的用户名，说明可以使用SSH PULL PUSH代码了！  
+
+修改已存在git项目的url：  
+
+```bash
+git remote set-url origin git@github.com:<github用户名>/<项目名>.git
+```
+
