@@ -578,3 +578,24 @@ Hi CloudSen! You've successfully authenticated, but GitHub does not provide shel
 git remote set-url origin git@github.com:<github用户名>/<项目名>.git
 ```
 
+### Android连接VPS
+
+> 如果购买了JuiceSSH高级版，则不用手动发公匙，app在连接的时候可以直接发公匙
+
+1. 去Google Play下载 `JuiceSSH` ；
+
+2. 打开JuiceSSH，新建认证；
+
+3. 生成 `私匙` ；
+
+4. 在认证列表长按刚刚新建的认证，到处公匙到 `Dropbox`；
+
+5. 在本地电脑将手机的公匙上传到VPS服务器的 `~/.ssh/authorized_keys` 文件中：  
+
+    ```bash
+    # -i指定公匙
+    ssh-copy-id -i ~/Dropbox/id_rsa_oneplus3.pub -p 29950 <普通用户名>@<远程IP>
+    ```
+
+6. 最后连接的时候选择SSH认证就好了。
+
