@@ -16,7 +16,7 @@ zsh --version
 # 可以直接编辑passwd文件
 sudo vim /etc/passwd
 # 也可以这样
-sudo chsh -s $(which zsh)
+chsh -s $(which zsh)
 ```
 
   

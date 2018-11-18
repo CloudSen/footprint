@@ -120,6 +120,283 @@
    rmvirtualenv test2
    ```
 
+#### pyenv&pyenv-virtualenv
+
+>  pyenv 帮助我们完美的隔离环境，让多个版本的 python 没有任何冲突，完美共存。
+>
+> 既可以管理系统的各个Python版本，还能管理虚拟环境，一步到位。
+
+**pyenv的作用是管理并隔离多个python版本，virtualenv使用某个版本的Python去创建虚拟环境从而管理并隔离各种第三方包的安装**。  
+
+##### 安装
+
+[安装pyenv](https://github.com/pyenv/pyenv#installation)：  
+
+```bash
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+source ~/.zshrc
+```
+
+安装需要的依赖，[见这里](https://github.com/pyenv/pyenv/wiki)：  
+
+```bash
+# Arch Linux
+pacman -S base-devel openssl zlib
+# Ubuntu/Debian/Mint
+apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev
+```
+
+安装完毕后，查看pyenv根目录中的versions文件夹，可以看到没有任何东西：  
+
+```bash
+cd ~/.pyenv/versions
+ls
+```
+
+安装虚拟环境插件：  
+
+```bash
+git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+# 添加虚拟环境自动激活
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+```
+
+##### pyenv使用
+
+查看所有的pyenv指令：  
+
+```bash
+pyenv commands
+```
+
+通过pyenv安装某个版本的Python：  
+
+```bash
+# 查看能够安装的所有版本
+pyenv install -l
+#　安装指定版本
+pyenv install <版本>
+# 强行安装，哪怕该版本已安装
+pyenv install -f <版本>
+# 取消安装，若该版本已安装
+pyenv install -s <版本>
+```
+
+安装新的python版本后刷新：  
+
+```bash
+pyenv rehash
+```
+
+查看当前位置版本：  
+
+显示当前激活中的Python版本以及如何设置的信息。
+
+```bash
+pyenv version
+# 当前使用的系统默认的python版本，由.pyenv/version文件全局配置
+system (set by /home/cloudsen/.pyenv/version)
+```
+
+查看当前安装的所有Python版本:    
+
+列出当前安装的所有版本，并在当前位置激活的版本前加星号。
+
+```
+pyenv versions
+
+* system (set by /home/cloudsen/.pyenv/version)
+  3.7.1
+```
+
+指定全局版本：  
+
+通过将版本名称写入〜/ .pyenv / version文件，设置要在所有shell中使用的Python的全局版本。它能够被本地版本的 `.python-version` 文件所覆盖，或者被环境变量的 `PYENV_VERSION` 所覆盖。  
+
+```bash
+
+pyenv global xxx
+# 指定多个全局python版本，前面的优先
+pyenv global xxx1 xxx2 xxx3
+```
+
+指定本地版本：  
+
+pyenv可以为某个路径单独设置一个python版本，使用此指令时，会在当前目录创建一个 `.python-version` 文件。本地版本会覆盖全局版本的配置，但也会被 `pyenv shell` 指令设置的终端版本或环境变量中的 `PYENV_VERSION` 覆盖。  
+
+```bash
+cd <某个目录>
+# 设置当前目录使用python3.7.1
+pyenv local 3.7.1
+# 执行上面的指令后，生成了.python-version文件
+ls -la
+
+drwxr-xr-x 2 cloudsen cloudsen 4096 11月 18 21:53 .
+drwxr-xr-x 4 cloudsen cloudsen 4096 11月 18 21:53 ..
+-rw-r--r-- 1 cloudsen cloudsen    7 11月 18 21:53 .python-version
+
+文件的内容为：  
+cat .python-version
+3.7.1
+```
+
+当然也可以指定多个本地版本，写在前面的版本优先使用：  
+
+```bash
+pyenv local 版本1  版本2
+```
+
+指定shell的版本：  
+
+通过在shell中设置 `PYENV_VERSION` 环境变量来设置特定于shell的一个或多个Python版本。此版本会覆盖特定于应用程序的本地版本和全局版本。  
+
+```bash
+pyenv shell 版本1  版本2
+# 取消设置
+pyenv shell --unset
+# 也可以手动修改环境变量
+export PYENV_VERSION=版本
+```
+
+卸载某个已安装的python版本：  
+
+```bash
+pyenv uninstall xxx
+# 尝试在不提示的情况下删除指定的版本确认。如果版本不存在，请不要显示错误消息。
+pyenv uninstall -f xxx
+```
+
+展示指令的全路径：  
+
+```bash
+pyenv which python
+/usr/bin/python
+pyenv which pyenv version
+/home/cloudsen/.pyenv/libexec/pyenv
+pyenv which which
+/usr/bin/which
+```
+
+更新和卸载 pyenv：  
+
+由于是通过git克隆的项目，没有进行什么安装，卸载特别方便，只需要直接删除在 `~/.zshrc` 中的环境变量和 `~/.pyenv` 目录。更新只需要 `git pull` 。  
+
+##### virtualenv插件的使用
+
+与pyenv一起使用：
+
+使用pyenv 的python版本创建虚拟环境，第一个参数指定要使用的python版本，第二个参数指定虚拟环境目录的名称。  
+
+```bash
+pyenv virtualenv <python版本> <虚拟环境目录名>
+```
+
+如：`pyenv virtualenv 3.7.1 test_virtualenv` 将会创建一个基与 `$(pyenv root)/versions` 目录下的python3.7.1版本名为test_virtualenv的虚拟环境。
+
+从当前python版本创建虚拟环境：  
+
+如果 `pyenv virtualenv` 没有传递python版本参数，则默认使用当前pyenv的python版本。  
+
+```bash
+pyenv version
+# 可以看到，这里使用的.pyenv/version全局配置
+3.4.3 (set by /home/cloudsen/.pyenv/version)
+pyenv virtualenv <虚拟环境目录名>
+```
+
+列出所有已存在的虚拟环境(包括conda的)：  
+
+```bash
+pyenv virtualenvs
+miniconda3-3.9.1 (created from /home/yyuu/.pyenv/versions/miniconda3-3.9.1)
+miniconda3-3.9.1/envs/myenv (created from /home/yyuu/.pyenv/versions/miniconda3-3.9.1)
+2.7.10/envs/my-virtual-env-2.7.10 (created from /home/yyuu/.pyenv/versions/2.7.10)
+3.4.3/envs/venv34 (created from /home/yyuu/.pyenv/versions/3.4.3)
+my-virtual-env-2.7.10 (created from /home/yyuu/.pyenv/versions/2.7.10)
+* venv34 (created from /home/yyuu/.pyenv/versions/3.4.3)
+```
+
+可以看到，每个虚拟环境有两个入口，一个名称较长在某个python版本下的envs文件夹中；一个名字很短，是一个符号链接。  
+
+激活/失效虚拟环境：  
+
+如果在shell中已经配置了 `eval "$(pyenv virtualenv-init -)` 的话，并且 `.python-version` 文件中指定了 `pyenv virtualenvs` 的某个虚拟环境，那么在你进出这个文件夹的时候，会自动的激活/失效当前虚拟环境。  
+
+当然你也可以手动激活/失效：  
+
+```bash
+pyenv activate <虚拟环境名>
+pyenv deactivate
+```
+
+删除存在的虚拟环境：   
+
+你可以手动删除这两个文件来移除某个虚拟环境： `$(pyenv root)/versions` 和 `$(pyenv root)/versions/{version}/envs` 。或者使用便捷指令：  
+
+```bash
+pyenv uninstall <虚拟环境名>
+```
+
+virtualenv 和 venv：  
+
+CPython 3.3和之后的python版本有一个名叫 `venv` 的模块。它提供了一个可执行模块venv，是virtualenv的继承者。  
+
+如果venv是可用的且 `virtualenv` 不可用，则 `pyenv-virtualenv` 使用 `python -m venv` 。  
+
+#### 实际演示
+
+安装一个版本为3.8-dev的python，创建一个项目文件夹 `test` ，然后为这个项目创建虚拟环境，并指定该项目文件夹使用创建的虚拟环境：  
+
+```bash
+mkdir ~/Documents/test
+
+pyenv install -l
+pyenv install 3.8-dev
+pyenv versions
+    * system (set by /home/cloudsen/.pyenv/version)
+      3.8-dev
+
+pyenv virtualenv 3.8-dev test-env
+    Looking in links: /tmp/tmpfrj5ikv0
+    Requirement already satisfied: setuptools in /home/cloudsen/.pyenv/versions/3.8-dev/envs/test-env/lib/python3.8/site-packages (39.0.1)
+    Requirement already satisfied: pip in /home/cloudsen/.pyenv/versions/3.8-dev/envs/test-env/lib/python3.8/site-packages (10.0.1)
+pyenv virtualenvs
+    3.8-dev/envs/test-env (created from /home/cloudsen/.pyenv/versions/3.8-dev)
+    test-env (created from /home/cloudsen/.pyenv/versions/3.8-dev)
+
+cd ~/Documents/test
+pyenv local test-env
+ls -la
+	drwxr-xr-x 2 cloudsen cloudsen 4096 11月 19 00:08 .
+    drwxr-xr-x 4 cloudsen cloudsen 4096 11月 18 21:53 ..
+    -rw-r--r-- 1 cloudsen cloudsen    8 11月 19 00:08 .python-version
+pyenv version
+	test-env (set by /home/cloudsen/Documents/test/.python-version)
+
+# 进入目录自动激活虚拟环境
+cd ..
+cd ./test/
+	(test-env)  cloudsen@GLaDOS ~/Documents/test：
+pyenv versions
+	system
+	3.8-dev
+	3.8-dev/envs/test-env
+	* test-env (set by /home/cloudsen/Documents/test/.python-version)
+
+# 退出目录自动失效虚拟环境
+cd ..
+pyenv versions
+	* system (set by /home/cloudsen/.pyenv/version)
+	3.8-dev
+	3.8-dev/envs/test-env
+	test-env
+```
+
+
+
 ### Pycharm
 
 #### 安装
