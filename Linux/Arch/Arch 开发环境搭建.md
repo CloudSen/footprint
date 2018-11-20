@@ -527,4 +527,10 @@ material质感设计主题，现在加入了详细的设置界面，非常棒。
 
 ### Pylint
 
-纠正Python的代码语法错误和规范错误
+纠正Python的代码语法错误和规范错误  
+
+
+
+## Mysql
+
+Arch Linux , Debian, CentOS等开发版本已经去掉了Oracle官方的Mysql，使用的Mysql开源分支版本MariaDB。
