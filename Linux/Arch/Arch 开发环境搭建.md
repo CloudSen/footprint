@@ -126,7 +126,7 @@
 >
 > 既可以管理系统的各个Python版本，还能管理虚拟环境，一步到位。
 
-**pyenv的作用是管理并隔离多个python版本，virtualenv使用某个版本的Python去创建虚拟环境从而管理并隔离各种第三方包的安装**。  
+**pyenv的作用是管理并隔离多个python版本，virtualenv使用某个版本的Python去创建虚拟环境，从而管理并隔离各种第三方包的安装**。  
 
 ##### 安装
 
@@ -144,9 +144,9 @@ source ~/.zshrc
 
 ```bash
 # Arch Linux
-pacman -S base-devel openssl zlib
+sudo pacman -S base-devel openssl zlib
 # Ubuntu/Debian/Mint
-apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev
 ```
 
 安装完毕后，查看pyenv根目录中的versions文件夹，可以看到没有任何东西：  

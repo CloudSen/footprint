@@ -250,12 +250,15 @@ gunicorn配置文件写在项目中的 `<项目路径>/RedQueen/RedQueen/gunicor
 import multiprocessing
 
 bind = 'unix:/home/cloudsen/work/deploy/webservers/sockets/nginx-gunicorn.sock'
-#bind = '127.0.0.1:8000'
+# TCP
+# bind = '127.0.0.1:8000'
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = 'gevent'
-errorlog = '/home/cloudsen/work/deploy/webservers/gunicorn/guicorn.error.log'
+errorlog = '/home/cloudsen/work/deploy/webservers/gunicorn/gunicorn.error.log'
 accesslog = '/home/cloudsen/work/deploy/webservers/gunicorn/gunicorn.access.log'
 proc_name = 'gunicorn_myblog'
+# 启用守护进程，后台运行，默认False
+# daemon = True
 ```
 
 终端启动gunicorn：   
