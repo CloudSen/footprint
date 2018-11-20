@@ -67,4 +67,21 @@ gunicorn RedQueen.wsgi:application -c python:RedQueen.gunicorn_conf -D
 [2018-11-19 14:39:16 -0500] [9554] [INFO] Booting worker with pid: 9554
 ```
 
-若没有报错，则启动成功！接下来就差Nginx了！
+若没有报错，则启动成功！接下来就差Nginx了！  
+
+## 关闭Gunicorn
+
+```bash
+apt-get install psmisc
+pstree -ap |grep gunicorn
+
+|-gunicorn,2196 /home/cloudsen/.pyenv/versions/red_queen_env/bin/gunicornRedQuee
+  |   |-gunicorn,2244 /home/cloudsen/.pyenv/versions/red_queen_env/bin/gunicornRedQuee
+  |   |-gunicorn,2249 /home/cloudsen/.pyenv/versions/red_queen_env/bin/gunicornRedQuee
+  |   |-gunicorn,2251 /home/cloudsen/.pyenv/versions/red_queen_env/bin/gunicornRedQuee
+  |   |-gunicorn,2262 /home/cloudsen/.pyenv/versions/red_queen_env/bin/gunicornRedQuee
+  |   `-gunicorn,2263 /home/cloudsen/.pyenv/versions/red_queen_env/bin/gunicornRedQuee
+  
+kill -9 2196
+```
+
