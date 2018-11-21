@@ -533,4 +533,103 @@ material质感设计主题，现在加入了详细的设置界面，非常棒。
 
 ## Mysql
 
-Arch Linux , Debian, CentOS等开发版本已经去掉了Oracle官方的Mysql，使用的Mysql开源分支版本MariaDB。
+> 详细说明见 [Arch Wiki Mysql](https://wiki.archlinux.org/index.php/MySQL)
+
+Arch Linux , Debian, CentOS等开发版本已经去掉了Oracle官方的Mysql，使用的Mysql开源分支版本MariaDB。MariaDB兼容Mysql。  
+
+### 安装
+
+Arch Linux应该已经预装了MariaDB，但是需要以ROOT身份初始化：  
+
+```bash
+mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+```
+
+启动 `mariadb` [守护进程](https://wiki.archlinux.org/index.php/Daemon)，运行安装脚本，然后重新启动守护进程：  
+
+```bash
+systemctl start mariadb
+mysql_secure_installation
+systemctl restart mariadb
+```
+
+运行安装脚本时，mysql root密码默认为空，然后需要重新设置mysql root密码等操作。  
+
+### 配置
+
+#### 添加新用戶
+
+访问域一般为localhost 或者 %，根据情况给用户分配数据库使用权。
+
+```bash
+mysql -u root -p
+-----------------
+MariaDB> CREATE USER '<用戶名>'@'<访问域>' IDENTIFIED BY '<密码>';
+MariaDB> GRANT ALL PRIVILEGES ON <某个数据库名>.<表名> TO '<用戶名>'@'<访问域>'
+MariaDB> FLUSH PRIVILEGES;
+MariaDB> quit
+```
+
+### 配置文件
+
+*MariaDB* 会按照以下顺序读取配置文件 (根据 `mysqld --help --verbose` 的输出):  
+
+```bash
+/etc/my.cnf /etc/mysql/my.cnf ~/.my.cnf
+```
+
+### 禁用远程访问
+
+如果只有本机需要 MySQL，可以通过不监听 TCP 端口 3306 来增强安全性。要拒绝远程连接，取消注释 `/etc/mysql/my.cnf` 中以下这行：  
+
+```
+skip-networking
+```
+
+### 启用自动补全
+
+编辑 `/etc/mysql/my.cnf`，将 `no-auto-rehash` 替换为 `auto-rehash`。下次客户端启动时就会启用自动补全。  
+
+### 使用UTF-8编码
+
+在 `/etc/mysql/my.cnf` 的 `mysqld` 下, 添加:
+
+```
+[mysqld]
+init_connect                = 'SET collation_connection = utf8_general_ci,NAMES utf8'
+collation_server            = utf8_general_ci
+character_set_client        = utf8
+character_set_server        = utf8
+```
+
+### 备份
+
+数据库可以转储到文件以简化备份。以下 shell 脚本会替你在脚本所在目录创建一个 `db_backup.gz` 文件，包含数据库的转储：
+
+```
+#!/bin/bash
+
+THISDIR=$(dirname $(readlink -f "$0"))
+
+mysqldump --single-transaction --flush-logs --master-data=2 --all-databases \
+ | gzip > $THISDIR/db_backup.gz
+echo 'purge master logs before date_sub(now(), interval 7 day);' | mysql
+```
+
+### 限制 logfile 的大小
+
+默认情况下， mysqld 会在 `/var/lib/mysql` 下创建二进制日志文件。可以在 `/etc/mysql/my.cnf` 中修改以下內容限制日志大小：  
+
+```bash
+expire_logs_days = 10
+max_binlog_size  = 100M
+```
+
+### dbeaver客戶端
+
+安裝：  
+
+```bash
+yay dbeaver
+```
+
