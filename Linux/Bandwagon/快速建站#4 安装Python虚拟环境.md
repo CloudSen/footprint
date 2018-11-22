@@ -1,8 +1,8 @@
-[TOC]
-
 > 服务器系统为Ubuntu 18
 
-## 虚拟环境的选择
+[TOC]
+
+# 选择虚拟环境
 
 Python的虚拟环境有很多工具选择，常用的大概是这三个：  
 
@@ -10,11 +10,13 @@ Python的虚拟环境有很多工具选择，常用的大概是这三个：
 2. virtualenvwrapper
 3. pyenv&pyenv-virtualenv
 
-这些工具在之前的文章中介绍得很详细，可以看看我的相关文章。 `virtualenv` 是用起来极其不方便，也不方便管理；`virtualenvwrapper` 对虚拟环境的使用和管理都非常方便，但是呢它仅仅作用于某个python版本这个层面；`pyenv` 非常强大，不但能够管理并隔离多个python版本，还能搭配 `pyenv-virtualenv` 插件，去管理并隔离各个python版本的虚拟环境，并且能自动激活/失效虚拟环境。  
+这些工具的详细讲解在其他文章中介绍得很详细，可以看看我的相关文章。 `virtualenv` 是用起来极其不方便，也不方便管理；`virtualenvwrapper` 对虚拟环境的使用和管理都非常方便，但是呢它仅仅作用于某个python版本这个层面；`pyenv` 非常强大，不但能够管理并隔离多个python版本，还能搭配 `pyenv-virtualenv` 插件，去管理并隔离各个python版本的虚拟环境，并且能自动激活/失效虚拟环境。  
 
 因此选择使用pyenv。  
 
-## pyenv安装
+
+
+# 安装pyenv
 
 ```bash
 cd ~
@@ -32,7 +34,9 @@ sudo apt-get update
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev
 ```
 
-## pyenv-virtualenv安装
+
+
+# 安装pyenv-virtualenv
 
 ```bash
 git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
@@ -53,14 +57,18 @@ fi
 eval "$(pyenv virtualenv-init -)"
 ```
 
-## 安装项目对应的Python版本
+
+
+# 安装项目对应的Python版本
 
 ```bash
 pyenv install 3.7.1
 pyenv rehash
 ```
 
-## 拉取Django项目
+
+
+# 拉取项目代码
 
 ```bash
 mkdir -p ~/work/deploy/webapps/
@@ -68,27 +76,35 @@ cd ~/work/deploy/webapps/
 git clone git@github.com:CloudSen/RedQueen.git
 ```
 
-## 创建特定python版本的虚拟环境
+
+
+# 创建特定python版本的虚拟环境
 
 ```bash
 pyenv virtualenv 3.7.1 red_queen_blog_env
 ```
 
-## 给Django项目指定创建的虚拟环境
+
+
+# 给Django项目指定创建的虚拟环境
 
 ```bash
 cd ~/work/deploy/webapps/RedQueen
 pyenv local red_queen_env 
 ```
 
-## 安装项目依赖
+
+
+# 安装项目依赖
 
 ```bash
 cd ~/work/deploy/webapps/RedQueen
 pip install -r requirements.txt
 ```
 
-## 生成项目的静态资源
+
+
+# 生成静态资源
 
 ```bash
 cd ~/work/deploy/webapps/RedQueen
@@ -97,7 +113,7 @@ python manage.py collectstatic
 
   
 
-至此，项目拉取完毕，虚拟环境搭建完毕，项目所需要的第三方包也安装完毕，静态文件生成完毕。
+至此，项目拉取完毕，虚拟环境搭建完毕，项目所需要的第三方包也安装完毕，静态文件生成完毕。下一步就是部署我们的项目。
 
 
 

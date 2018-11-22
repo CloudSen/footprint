@@ -1,8 +1,8 @@
-> 之前的文章已经Gunicorn做了详细介绍，请自行查阅。
+[TOC]
 
-## 安装
+# 安装
 
-上一步安装项目依赖的时候，已经在虚拟环境中安装Gunicorn以及gevent异步worker类型：  
+之前的文章已经Gunicorn做了详细介绍，请自行查阅。上一步安装项目依赖的时候，已经在虚拟环境中安装Gunicorn以及gevent异步worker类型：  
 
 ```bash
 cd ~/work/deploy/webapps/RedQueen
@@ -11,7 +11,9 @@ pip list
 	gunicorn 19.9.0
 ```
 
-## 修改Django项目的settings
+
+
+# 修改Django项目的settings
 
 注意以下这两项内容：  
 
@@ -22,14 +24,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_statics')
 DEBUG = False
 ```
 
-## 创建相关路径
+# 创建相关路径
 
 ```bash
 mkdir -p ~/work/deploy/webservers/gunicorn/
 mkdir -p ~/work/deploy/webservers/sockets/
 ```
 
-## Gunicorn配置文件
+# Gunicorn配置文件
 
 gunicorn配置文件写在项目中的 `<项目路径>/RedQueen/RedQueen/gunicorn_conf.py` ：  
 
@@ -45,7 +47,7 @@ accesslog = '/home/cloudsen/work/deploy/webservers/gunicorn/gunicorn.access.log'
 proc_name = 'gunicorn_myblog'
 ```
 
-## 后台启动Gunicorn
+# 后台启动Gunicorn
 
 ```bash
 cd ~/work/deploy/webapps/RedQueen
@@ -69,7 +71,7 @@ gunicorn RedQueen.wsgi:application -c python:RedQueen.gunicorn_conf -D
 
 若没有报错，则启动成功！接下来就差Nginx了！  
 
-## 关闭Gunicorn
+# 关闭Gunicorn
 
 ```bash
 apt-get install psmisc

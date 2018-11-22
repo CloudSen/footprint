@@ -1,6 +1,8 @@
-> 之前的文章已经Nginx Open Source做了详细介绍，请自行查阅。
+[TOC]
 
-## 安装
+# 安装
+
+之前的文章已经Nginx Open Source做了详细介绍，请自行查阅。  
 
 ```bash
 sudo apt-get update
@@ -8,7 +10,9 @@ sudo apt-get install nginx
 sudo nginx -v
 ```
 
-## 创建配置文件
+
+
+# 创建配置文件
 
 ```bash
 mkdir -p ~/work/deploy/webservers/nginx/
@@ -64,7 +68,7 @@ http {
     
     server {
         listen 80;
-        server_name <你的服务器host>;
+        server_name <你的服务器ip>;
         client_max_body_size 4G;
         keepalive_timeout 5;
         
@@ -89,7 +93,7 @@ http {
             rewrite ^ /cloudsen_blog;
         }
         
-        # 其他的url代理给Gunicorn使用的 unix domain socket
+        # 其他的url代理给Gunicorn监听的 unix domain socket
         location / {
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -104,7 +108,9 @@ http {
 }
 ```
 
-## 测试配置文件正确性
+
+
+# 测试配置文件正确性
 
 ```bash
 sudo nginx -t -c ~/work/deploy/webservers/nginx/blog_nginx.conf
@@ -113,7 +119,9 @@ nginx: the configuration file /home/cloudsen/work/deploy/webservers/nginx/blog_n
 nginx: configuration file /home/cloudsen/work/deploy/webservers/nginx/blog_nginx.conf test is successful
 ```
 
-## 启动Nginx
+
+
+# 启动Nginx
 
 ```bash
 sudo nginx -c ~/work/deploy/webservers/nginx/blog_nginx.conf
@@ -125,12 +133,14 @@ sudo nginx -c ~/work/deploy/webservers/nginx/blog_nginx.conf
 sudo netstat -tulpn | grep --color :80
 ```
 
-如果修改了配置文件，只需要reload即可：  
+如果修改了配置文件，只需要reload或者reopen即可：  
 
 ```bash
 sudo nginx -s reload
 ```
 
-## 访问网站
 
-目前还未购买域名，但可以通过IP直接访问，测试Nginx配置是否正确。
+
+# 访问网站
+
+目前还未购买域名，但若可以通过IP和URI直接访问，那么部署已经成功。下一步将要部署域名以及DNS解析。
