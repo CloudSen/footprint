@@ -125,5 +125,12 @@ sudo nginx -c ~/work/deploy/webservers/nginx/blog_nginx.conf
 sudo netstat -tulpn | grep --color :80
 ```
 
+如果修改了配置文件，只需要reload即可：  
+
+```bash
+sudo nginx -s reload
+```
+
 ## 访问网站
 
+目前还未购买域名，但可以通过IP直接访问，测试Nginx配置是否正确。
