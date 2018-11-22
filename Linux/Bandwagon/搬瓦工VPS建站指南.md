@@ -1,14 +1,16 @@
 # 搬瓦工VPS建站指南
 
-> 本地用的Arch Linux，搬瓦工安装的Ubuntu 18
+> 建站环境
+>
+> 本地用的Arch Linux，搬瓦工安装的Ubuntu 18。
 
-本指南的目的，并非仅仅是含糊地介绍如何快速建站。而是通过每一步详细的讲解，提高Linux的技能水平，在以后的操作中得心应手。
+通过本指南，你可以快速熟悉部署个人网站的整个流程。
 
 ## 建站基础#1 KiwiVM基本配置
 
 服务器购买完毕后，进入 `Client Area -> Services-> My Services` 便能看见服务器列表：  
 
-![clientarea](imgs/clientarea.png)  
+[![FPE8Tf.md.png](https://s1.ax1x.com/2018/11/22/FPE8Tf.md.png)](https://imgchr.com/i/FPE8Tf)
 
 查看服务器状态、重装系统、二次验证、修改root密码等操作都是在KiwiVM中进行的。  
 
@@ -16,13 +18,13 @@
 
 这里能看到系统内存和交换区的占用、IP地址、SSH端口、运行状态、硬盘容量等信息。并且可以执行关机，开机等操作。  
 
-![main](imgs/maincontrols.png)  
+![main](https://s1.ax1x.com/2018/11/22/FPEJk8.png)  
 
 ### Detailed statistics 状态详情
 
 这里以图表的方式展现网络状态、CPU占用情况、储存I/O状态。  
 
-![detail](imgs/detailstatus.png)  
+![detail](https://s1.ax1x.com/2018/11/22/FPE30P.png)  
 
 ### 网页版终端操作
 
@@ -32,13 +34,13 @@
 
 搬瓦工提供了丰富的OS选择，推荐安装 Ubuntu-18.04 ，因为它拥有4.15新内核，可直接开启Google BBR。  
 
-![installos](imgs/installos.png)  
+![installos](https://s1.ax1x.com/2018/11/22/FPE1mt.png)  
 
 ### Two-factor authentication 二次验证
 
 每当进入KiwiVM时，可以设置输入二次验证码，这里支持 `Google身份验证` 和手机短信验证。  
 
-![2auth](imgs/twoauth.png)  
+![2auth](https://s1.ax1x.com/2018/11/22/FPEYtS.png)  
 
 ### Root password modification ROOT密码修改
 
@@ -52,7 +54,7 @@
 
 通过 `Migrate to another DC` 可以切换主机的地址和IP，前提是IP未被GFW查封。  
 
-![migrate](imgs/migrate.png)  
+![migrate](https://s1.ax1x.com/2018/11/22/FPEQOI.png)  
 
 ### Snapshots 建立/导入快照
 
