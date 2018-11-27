@@ -419,6 +419,7 @@ ssh blogvps
 ```bash
 # 思源黑体 Noto Sans CJK TC ，TC是T Chinese
 yay -S ttf-noto
+yay -S adobe-source-han-sans-cn-fonts
 # 文泉微米黑
 yay -S wqy-microhei
 # Android 的字体
