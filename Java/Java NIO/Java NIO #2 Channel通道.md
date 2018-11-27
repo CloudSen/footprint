@@ -70,3 +70,10 @@ public class ChannelTest {
 }
 ```
 
+过程很简单，首先创建了一个文件Channel，然后通过该Channel读取文件数据并写入Buffer缓存区，然后调用flip()方法后，将当前Buffer中的内容再读出来。
+
+
+
+# 参考资料
+
+1. [Java NIO Tutorial - Channel](http://tutorials.jenkov.com/java-nio/channels.html)
