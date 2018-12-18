@@ -1,12 +1,10 @@
-# Arch 开发环境搭建
+[TOC]
 
-  
+# Python 开发环境
 
-## Python 开发环境
+## Python
 
-### Python
-
-#### 安裝
+### 安裝
 
 1. Arch默认的`/usr/bin/python`是链接到 python 3 的，終端键入 `python` 默认就是Python3.7(很爽有木有)，若要使用Python2.7就键入 `python2`；
 
@@ -76,7 +74,7 @@
    # virtualenvwrapper 4.8.2 
    ```
 
-#### 测试
+### 测试
 
 1. 使用 `virtualenv` ：
 
@@ -120,7 +118,7 @@
    rmvirtualenv test2
    ```
 
-#### pyenv&pyenv-virtualenv
+## pyenv&pyenv-virtualenv
 
 >  pyenv 帮助我们完美的隔离环境，让多个版本的 python 没有任何冲突，完美共存。
 >
@@ -128,7 +126,7 @@
 
 **pyenv的作用是管理并隔离多个python版本，virtualenv使用某个版本的Python去创建虚拟环境，从而管理并隔离各种第三方包的安装**。  
 
-##### 安装
+### 安装
 
 [安装pyenv](https://github.com/pyenv/pyenv#installation)：  
 
@@ -164,7 +162,7 @@ git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/py
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 ```
 
-##### pyenv使用
+### pyenv使用
 
 查看所有的pyenv指令：  
 
@@ -284,7 +282,7 @@ pyenv which which
 
 由于是通过git克隆的项目，没有进行什么安装，卸载特别方便，只需要直接删除在 `~/.zshrc` 中的环境变量和 `~/.pyenv` 目录。更新只需要 `git pull` 。  
 
-##### virtualenv插件的使用
+### virtualenv插件的使用
 
 与pyenv一起使用：
 
@@ -346,7 +344,7 @@ CPython 3.3和之后的python版本有一个名叫 `venv` 的模块。它提供�
 
 如果venv是可用的且 `virtualenv` 不可用，则 `pyenv-virtualenv` 使用 `python -m venv` 。  
 
-#### 实际演示
+### 实际演示
 
 安装一个版本为3.8-dev的python，创建一个项目文件夹 `test` ，然后为这个项目创建虚拟环境，并指定该项目文件夹使用创建的虚拟环境：  
 
@@ -397,7 +395,7 @@ pyenv versions
 
 
 
-### Pycharm
+## Pycharm
 
 #### 安装
 
@@ -455,9 +453,11 @@ Categories=Application;Development;
 
   
 
-## Java 开发环境
+# Java 开发环境
 
 > 使用Orical的JAVASE，不适用OpenJDK，免得遇到奇奇怪怪的问题。
+
+## JDK
 
 ### 安装
 
@@ -501,43 +501,78 @@ sudo archlinux-java fix
 sudo find / -name java
 ```
 
-  
+## Maven
 
-## JetBrains 实用插件
+### 安装
 
-### .ignore
+去官网下载压缩包：[Download](https://maven.apache.org/download.cgi) ，然后解压缩到指定目录。  
+
+在 `.zshrc` 文件中加入以下內容：  
+
+```bash
+# java
+export JAVA_HOME=/usr/lib/jvm/java-8-jdk
+export MAVEN_HOME=/home/cloudsen/soft/apache-maven-3.6.0
+export PATH="$MAVEN_HOME/bin:$PATH"
+```
+
+在终端中查看maven版本，若有以下信息，则说明安装完毕，可以正常使用：  
+
+```
+$ mvn -v
+Apache Maven 3.6.0 (97c98ec64a1fdfee7767ce5ffb20918da4f719f3; 2018-10-25T02:41:47+08:00)
+Maven home: /home/cloudsen/soft/apache-maven-3.6.0
+Java version: 1.8.0_192, vendor: Oracle Corporation, runtime: /usr/lib/jvm/java-8-jdk/jre
+Default locale: zh_CN, platform encoding: UTF-8
+OS name: "linux", version: "4.19.2-arch1-1-arch", arch: "amd64", family: "unix"
+
+```
+
+### 配置
+
+编辑 `$MAVEN_HOME/conf/` 路径下的 `settings.xml` 文件，主要设置一下本地仓库的位置：  
+
+```xml
+<localRepository>/home/cloudsen/work/java/mvnRepository/</localRepository>
+```
+
+
+
+# JetBrains 实用插件
+
+## .ignore
 
 生成许多项目类型的git忽略文件配置。
 
-### CodeGlance
+## CodeGlance
 
 在右侧显示一列小小的代码minmap，方便定位。
 
-### Background Image Plus
+## Background Image Plus
 
 设置编辑器的背景图片。
 
-### Material Theme UI
+## Material Theme UI
 
 material质感设计主题，现在加入了详细的设置界面，非常棒。
 
-### ESLint
+## ESLint
 
 纠正JavaScript的代码语法错误和规范错误
 
-### Pylint
+## Pylint
 
 纠正Python的代码语法错误和规范错误  
 
 
 
-## Mysql
+# Mysql
 
 > 详细说明见 [Arch Wiki Mysql](https://wiki.archlinux.org/index.php/MySQL)
 
 Arch Linux , Debian, CentOS等开发版本已经去掉了Oracle官方的Mysql，使用的Mysql开源分支版本MariaDB。MariaDB兼容Mysql。  
 
-### 安装
+## 安装
 
 Arch Linux应该已经预装了MariaDB，但是需要以ROOT身份初始化：  
 
@@ -555,9 +590,9 @@ systemctl restart mariadb
 
 运行安装脚本时，mysql root密码默认为空，然后需要重新设置mysql root密码等操作。  
 
-### 配置
+## 配置
 
-#### 添加新用戶
+### 添加新用戶
 
 访问域一般为localhost 或者 %，根据情况给用户分配数据库使用权。
 
