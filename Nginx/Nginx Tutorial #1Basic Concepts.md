@@ -1,4 +1,6 @@
-# Nginx指南 #2概念与基础
+[TOC]
+
+# Nginx指南 #2 概念与基础
 
 
 
@@ -26,26 +28,26 @@ Nginx的配置文件根据系统的不同存放在以下路径：
 
 配置文件由Directive和Context組成:  
 
-- Directive: 由名字和参数构成，以分号结尾。
+- Directive: 由名字和参数构成，以分号结尾。  
 
-    ```
-    gzip on;
-    ```
+```nginx
+gzip on;
+```
 
-- Context:  是一个你能声明Directive的块，类似编程语言的作用域，使用花括号。
+- Context:  是一个你能声明Directive的块，类似编程语言的作用域，使用花括号。  
 
-    ```
-    worker_processes 2; # directive in global context
-    gzip off; # directive in global context
-    
-    http {              # http context
-        gzip on;        # directive in http context
-    
-      server {          # server context
-        listen 80;      # directive in server context
-      }
-    }
-    ```
+```nginx
+worker_processes 2; # directive in global context
+gzip off; # directive in global context
+
+http {              # http context
+gzip on;        # directive in http context
+
+server {          # server context
+listen 80;      # directive in server context
+}
+}
+```
 
 ### Directive 类型
 
@@ -55,7 +57,7 @@ Nginx的配置文件根据系统的不同存放在以下路径：
 
 每个Context中只能定义一次且只有一个值。Subcontext能重写父类的Directive，但重写的有效性只在当前Subcontext中有效。  
 
-```
+```nginx
 gzip on;
 gzip off; # 在同一个Context中非法定义2个相同的普通Directive
 
@@ -74,7 +76,7 @@ server {
 
 在同一个Context中定义多个相同的Directive，这些Directive的值会进行累加，而不是被覆盖。若在Subcontext中重写这个Directive，那么将会覆盖父类中的所有值。重写的有效性只在当前Subcontext中有效。  
 
-```
+```nginx
 error_log /var/log/nginx/error.log;
 error_log /var/log/nginx/error_notive.log notice;
 error_log /var/log/nginx/error_debug.log debug;
@@ -93,7 +95,7 @@ server {
 
 例如，`rewrite` directive，每个匹配directive都会被执行：  
 
-```
+```nginx
 server {
     rewrite ^ /foobar;
     
@@ -113,7 +115,7 @@ server {
 
 这与 `return` 指定的行为是不同的：  
 
-```
+```nginx
 server {
     location / {
         return 200;
@@ -130,7 +132,7 @@ server {
 
 在nginx中，你可以定义多个通过 `server {}` 定义的虚拟服务。  
 
-```
+```nginx
 server {
   listen      *:80 default_server;
   server_name netguru.co;
@@ -192,13 +194,13 @@ Nginx会存储3个哈希表：精确名，以 `*` 开头的通配名，以 `*` �
 
 值得牢记于心的是  
 
-```
+```nginx
 server_name .netguru.co
 ```
 
 它是以下的缩写：  
 
-```
+```nginx
 server_name netguru.co www.netguru.co *.netguru.co
 ```
 
@@ -208,7 +210,7 @@ server_name netguru.co www.netguru.co *.netguru.co
 
 在大多数情况下，你会发现 `listen` 指令存贮IP:port值。  
 
-```
+```nginx
 listen 127.0.0.1:80;
 listen 127.0.0.1;    # 默认使用80端口
 
@@ -221,13 +223,13 @@ listen [::1];        # IPv6 addresses
 
 当然，它也可以指定 UNIX-domain sockets：  
 
-```
+```nginx
 listen unix:/var/run/nginx.sock;
 ```
 
 你还可以直接使用主机名：  
 
-```
+```nginx
 listen localhost:80;
 listen netguru.co:80;
 ```
@@ -242,7 +244,7 @@ listen netguru.co:80;
 
 具备以上知识后，我们就可以创建并理解运行Nginx的最小配置。  
 
-```
+```nginx
 # /etc/nginx/nginx.conf
 
 events {} # 事件处理
@@ -257,11 +259,11 @@ http {
 }
 ```
 
-#### root 指令
+### root 指令
 
  `root` 指令设置了请求的资源根目录，它允许nginx将请求映射到文件系统上。  
 
-```
+```nginx
 server {
   listen 80;
   server_name netguru.co;
@@ -271,16 +273,16 @@ server {
 
 它允许nginx根据请求返回服务器内容：  
 
-```
+```nginx
 netguru.co:80/index.html     # returns /var/www/netguru.co/index.html
 netguru.co:80/foo/index.html # returns /var/www/netguru.co/foo/index.html
 ```
 
-#### location 指令
+### location 指令
 
 `location` 指令根据请求的URI进行设置。语法是 `location [modifier] path`。  
 
-```
+```nginx
 localtion /foo {
     # 你的配置...
 }
@@ -298,7 +300,7 @@ localtion /foo {
 
 在同一个上下文中，可以使用多个 `location` 指令：  
 
-```
+```nginx
 events {}
 
 http {
@@ -334,7 +336,7 @@ Nginx还提供了一些能够与 `location` 结合使用的修饰符。
 no modifier - 没有使用修饰符或以上三个都没匹配到，将path当作前缀进行匹配
 ```
 
-```
+```nginx
 location /match {
   return 200 'Prefix match: matches everything that starting with /match';
 }
@@ -364,11 +366,11 @@ location = /match {
 /match-abc  => 'Prefix match: matches everything that starting with /match'
 ```
 
-#### try_files 指令
+### try_files 指令
 
 `try_files` 指令将尝试不同的路径，返回找到的任何一个。  
 
-```
+```nginx
 try_files $uri index.html =404;
 ```
 
@@ -380,7 +382,7 @@ try_files $uri index.html =404;
 
 有趣的是，如果我们在 `server` 上下文中定义了 `try_files` ，然后又定义了能匹配所有请求的 `location` ，那么 `try_files` 不会被执行。因为在 `server` 上下文中的 `try_files` 定义了一个自己的伪位置，这个伪位置是最不具体的位置，优先级非常低，其他的 `location` 比这个伪位置更加具体。
 
-```
+```nginx
 server {
   try_files $uri /index.html =404; # 不会执行
 
@@ -393,12 +395,10 @@ server {
 
  
 
-## 版权信息
+# 参考资料
 
-本文大量参考他人成果以及官方文档，本人进行了翻译和归纳总结，原作者信息如下：
+1. 作者：Mateusz Dobek
 
-作者：Mateusz Dobek
+    链接：[Nginx Tutorial #1: Basic Concepts](https://www.netguru.co/codestories/nginx-tutorial-basics-concepts)
 
-链接：[Nginx Tutorial #1: Basic Concepts](https://www.netguru.co/codestories/nginx-tutorial-basics-concepts)
-
-发布于：netguru
+    发布于：netguru

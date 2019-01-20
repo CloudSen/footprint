@@ -1,10 +1,9 @@
+[TOC]
+
 # 在Arch Linux上给Android刷机
 
 > 如果你使用的是Window，不用害怕，一样可以看看，刷机的方法和原理都相同。
 >
-> 参考资料
->
-> [Arch Linux Wiki - Android](https://wiki.archlinux.org/index.php/Android_(简体中文))
 
 ## 下载必备工具
 
@@ -36,7 +35,7 @@ yay -S android-udev
 
 ## 刷机过程
 
-#### Arch Linux的前置准备
+### Arch Linux的前置准备
 
 将当前用户加入 `adbusers` 用户组：  
 
@@ -101,7 +100,7 @@ sudo flashboot devices
 da948755        fastboot
 ```
 
-#### 刷入Recovery
+### 刷入Recovery
 
 将TWRP刷入手机：  
 
@@ -125,7 +124,7 @@ List of devices attached
 da948755        recovery
 ```
 
-#### 三清设备
+### 三清设备
 
 在图形界面进入 `清理 => 高级清除` ，三清设备，我有强迫症，把内部储存也清理了。勾选以下选项，并确认清除：  
 
@@ -134,7 +133,7 @@ da948755        recovery
 - Data
 - Internal Storage(可选)
 
-#### 刷入各种包
+### 刷入各种包
 
 通过ADB向手机发送刷机包：
 
@@ -158,7 +157,7 @@ adb push Magisk-v17.1.zip /sdcard
 
 刷完之后，重启进入系统。  
 
-#### Good Job
+# Good Job
 
 aha so nice man :D  
 

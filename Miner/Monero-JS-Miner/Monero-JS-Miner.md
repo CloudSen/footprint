@@ -18,7 +18,7 @@
 
 去 [Coinhive官网](https://coinhive.com) 注册一个账号，注册完毕后，进入 `Settings->Payments` 然后在 `Monero Payment Address` 这一栏填入上一步得到的钱包地址。  
 
-![input_payment_address](./imgs/input_monero_payment_address.png)  
+![input_payment_address](https://s1.ax1x.com/2018/12/20/FDcSh9.png)  
 
 然后进入 `Settings->Sites & API Keys` ，得到 `Site Key(public)` ，这个一会要填入html中。
 
@@ -121,11 +121,11 @@ html, body {
 
 刷新界面即可使用：
 
-![simple-ui-success](./imgs/simple_ui_success.png)  
+![simple-ui-success](https://s1.ax1x.com/2018/12/20/FDc9pR.png)  
 
 在coinhive官网也可以看到详细数据：
 
-![coinhive-data](./imgs/coinhive_data.png)  
+![coinhive-data](https://s1.ax1x.com/2018/12/20/FD6ztJ.png)  
 
 ## 结语
 

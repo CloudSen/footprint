@@ -1,6 +1,8 @@
-# Arch Linux 日常环境搭建  
+[TOC]
 
-![background](img/29.png)  
+# Arch Linux 日常环境搭建
+
+![background](https://s1.ax1x.com/2018/12/19/FDy5xx.png)  
 
 
 
@@ -31,7 +33,7 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-![oh](img/26.png)  
+![oh](https://s1.ax1x.com/2018/12/19/FDyqde.png)  
 
 安装完毕后，在 `~` 目录生成新的 `.zshrc` 配置文件。  
 
@@ -85,7 +87,7 @@ source /usr/bin/virtualenvwrapper.sh
 
 ```
 
-![omz](img/25.png)  
+![omz](https://s1.ax1x.com/2018/12/19/FDyTsK.png)  
 
   
 
@@ -97,11 +99,11 @@ source /usr/bin/virtualenvwrapper.sh
 pacman -S yakuake
 ```
 
-![yakuake](img/24.png)  
+![yakuake](https://s1.ax1x.com/2018/12/19/FDy7qO.png)  
 
   点击这里下载[Yakuake-Material主题](https://store.kde.org/p/1229144/)，下载完毕后，进入Yakuake `Configure Yakuake->Appearance` 安装主题。  
 
-![29](img/31.png)  
+![29](https://s1.ax1x.com/2018/12/19/FDyXid.png)  
 
 
 
@@ -202,7 +204,7 @@ makepkg -si
    yay <包名>
    ```
 
-   ![yay1](img/14.png)  
+   ![yay1](https://s1.ax1x.com/2018/12/19/FDygZF.png)  
 
 3. 打印系统状态：
 
@@ -210,7 +212,7 @@ makepkg -si
    yay -Ps
    ```
 
-   ![yay2](img/15.png)  
+   ![yay2](https://s1.ax1x.com/2018/12/19/FDyUaQ.png)  
 
 4. 清除不需要的依赖包：
 
@@ -218,7 +220,7 @@ makepkg -si
    yay -Yc
    ```
 
-   ![yay3](img/16.png)  
+   ![yay3](https://s1.ax1x.com/2018/12/19/FDya5j.png)  
 
 5. 检查并更新系统和安装的软件：
 
@@ -226,13 +228,13 @@ makepkg -si
    yay -Syu
    ```
 
-   ![yay4](img/17.png)  
+   ![yay4](https://s1.ax1x.com/2018/12/19/FDywPs.png)  
 
   
 
 ## Typora
 
-![ty1](img/18.png)  
+![ty1](https://s1.ax1x.com/2018/12/19/FDyB2q.png)  
 
 MarkDown编辑神器，所见即所得。
 
@@ -263,7 +265,7 @@ yay netease-cloud-music
 yay electron-ssr
 ```
 
-![ssr](img/19.png)  
+![ssr](https://s1.ax1x.com/2018/12/19/FDyfi9.png)  
 
 ### 终端使用代理
 
@@ -320,7 +322,7 @@ google-chrome-stable --proxy-server="socks5://127.0.0.1:1080"
 
 首先设置自己的本地代理端口如图：
 
-![so1](img/20.png)  
+![so1](https://s1.ax1x.com/2018/12/19/FDy2a4.png)  
 
 然后配置 `auto switch`，注意图中红色部分，将GFWLIST填入：  
 
@@ -330,7 +332,7 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 
 
-![so2](img/21.png)  
+![so2](https://s1.ax1x.com/2018/12/19/FDyRIJ.png)  
 
 配置好后，该插件会根据规则自动选择使用代理还是直连。  
 
@@ -338,9 +340,9 @@ https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
 
 选择 `add condition`    
 
-![so3](img/22.png)  
+![so3](https://s1.ax1x.com/2018/12/19/FDyhGR.png)  
 
-![so4](img/23.png)    
+![so4](https://s1.ax1x.com/2018/12/19/FDyoM6.png)    
 
 
 
@@ -376,7 +378,7 @@ yay -Syyu
 
 大概就是Hacker Hacker，牛叉感十足。  
 
-![cmatrix](./img/cmatrix.png)  
+![cmatrix](https://s1.ax1x.com/2018/12/19/FDybZD.png)  
 
 
 
@@ -430,15 +432,15 @@ yay -S ttf-monaco
 
 终端我用的Noto Sans Mono for Powerline 或者 Droid Sans Mono for Powerline。
 
-![font1](img/27.png)  
+![font1](https://s1.ax1x.com/2018/12/19/FDyLIH.png)  
 
 chrome我设置的文泉微米黑。  
 
-![font2](img/28.png)  ​    
+![font2](https://s1.ax1x.com/2018/12/19/FDyjJA.png)      
 
 编程字体 `monaco`：  
 
-![font4](img/30.png)  
+![font4](https://s1.ax1x.com/2018/12/19/FDy4R1.png)  
 
 
 

@@ -1,3 +1,5 @@
+[TOC]
+
 #  Arch Linux 安装(BIOS和虚拟机)
 
 ## 初始化设置
@@ -37,11 +39,11 @@ timedatectl status
 
 可以看到如下输出：  
 
-![sys_time](img/1.png)  
+![sys_time](https://s1.ax1x.com/2018/12/19/FDyl8I.png)  
 
 目前时区还不对，要修改到上海：  
 
-![time_zone](img/2.png)  
+![time_zone](https://s1.ax1x.com/2018/12/19/FDy12t.png)  
 
 ```shell
 # 查询所有时区，按q退出
@@ -54,7 +56,7 @@ timedatectl set-ntp true
 
 再次查询时间，可以看到local time已经正确：  
 
-![local_time](img/3.png)  
+![local_time](https://s1.ax1x.com/2018/12/19/FDyQPA.png)  
 
 ### 硬盘分区
 
@@ -72,7 +74,7 @@ timedatectl set-ntp true
 fdisk -l
 ```
 
-![disk_list](img/4.png)  
+![disk_list](https://s1.ax1x.com/2018/12/19/FDyGKf.png)  
 
 对sda硬盘进行操作：  
 
@@ -80,7 +82,7 @@ fdisk -l
 fdisk /dev/sda
 ```
 
-![fdisk](img/5.png)  
+![fdisk](https://s1.ax1x.com/2018/12/19/FDy0Gn.png)  
 
 现在`fdisk`主要操作说明如下：  
 
@@ -91,13 +93,13 @@ fdisk /dev/sda
 
 主要操作如下图所示：  
 
-![fdisk1](img/6.png)  
+![fdisk1](https://s1.ax1x.com/2018/12/19/FDyDx0.png)  
 
 最后操作完毕后，输入`p`查看分区状况，确认无误后，输入`w`保存并退出：  
 
-![fdisk2](img/7.png)  
+![fdisk2](https://s1.ax1x.com/2018/12/19/FDy6qU.png)  
 
-![fdisk3](img/8.png)  
+![fdisk3](https://s1.ax1x.com/2018/12/19/FDy3xP.png)  
 
 然后对分好的区进行格式化：  
 
@@ -110,7 +112,7 @@ mkswap /dev/sda2
 swapon /dev/sda2
 ```
 
-![fdisk4](img/9.png)  
+![fdisk4](https://s1.ax1x.com/2018/12/19/FDyNVg.png)  
 
 最后挂载分区：
 
@@ -155,7 +157,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 vim /mnt/etc/fstab
 ```
 
-![fstab](img/10.png)  
+![fstab](https://s1.ax1x.com/2018/12/19/FDyJr8.png)  
 
 ### Chroot
 
@@ -187,7 +189,7 @@ vim /etc/locale.gen
 locale-gen
 ```
 
-![locale](img/11.png)  
+![locale](https://s1.ax1x.com/2018/12/19/FDyYqS.png)  
 
 使用VIM打开`/etc/locale.conf`文件，并在行首加入`LANG=en_US.UTF-8`。
 
@@ -245,7 +247,7 @@ grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-![grub](img/12.png)  
+![grub](https://s1.ax1x.com/2018/12/19/FDyyrT.png)  
 
 ### 退出CHROOT重启系统
 
@@ -256,7 +258,7 @@ reboot
 
 登陆自己的账号后，基本安装就结束了，接下来要安装`KDE`图形界面。  
 
-![login](img/13.png)  
+![login](https://s1.ax1x.com/2018/12/19/FDysMV.png)  
 
 ### dhcp服务开机自启动
 

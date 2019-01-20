@@ -1,12 +1,10 @@
-## Gunicorn介绍
+[TOC]
 
-> 以下内容都来源与[官方文档](http://docs.gunicorn.org/en/stable/)。
->
-> 在下做了翻译，并进行了归纳总结和线上操作演示。
+# Gunicorn介绍
 
 Gunicorn 的名字来源于 `Green Unicorn绿色独角兽` ，它是一个适用于UNIX的Python WSGI HTTP服务器。Gunicorn与各种web框架兼容，部署简单、服务器资源更明确并且速度相当快。默认是同步工作，支持Gevent、Eventlet异步。**强烈建议在Nginx代理服务器后面使用Gunicorn**。
 
-### 特点
+## 特点
 
 - 原生支持 `WSGI` , `Django` 与 `Paster`
 - 自动化worker进程管理
@@ -17,10 +15,9 @@ Gunicorn 的名字来源于 `Green Unicorn绿色独角兽` ，它是一个适用
 
 
 
+# Installation安装
 
-## Installation安装
-
-### 安装
+## 安装
 
 通过pip安装(建议安装在虚拟环境中)：  
 
@@ -39,7 +36,7 @@ sudo pacman -S gunicorn
 sudo apt-get -t stretch-backports install gunicorn
 ```
 
-### 异步的worker
+## 异步的worker
 
 > 这里涉及的是Python的协程
 
@@ -61,15 +58,15 @@ pip install gevent
 
   
 
-## 运行Gunicorn
+# 运行Gunicorn
 
 你可以通过命令行的方式运行Gunicorn，也可以嵌入Django或Paster中去使用。  
 
-### 命令行方式
+## 命令行方式
 
 当 `gunicorn` 安装完毕后，就可以使用命令行了。若通过pip安装的，则在虚拟环境中运行；若通过系统安装的，则可以通过终端直接执行。  
 
-#### gunicorn
+### gunicorn
 
 基础用法：  
 
@@ -104,9 +101,9 @@ gunicorn --workers=2 test:app
 [2018-11-19 03:16:08 +0800] [20444] [INFO] Booting worker with pid: 20444
 ```
 
-访问http://127.0.0.1:8000就能看到"Hello, World!" 。那么说明gunicorn正常运行。
+访问 `http://127.0.0.1:8000` 就能看到"Hello, World!" 。那么说明gunicorn正常运行。
 
-#### 常用参数
+### 常用参数
 
 - `-c CONFIG, --config=CONFIG` - 通过以下方式指定一个配置文件，`$(PATH)` 或 `file:$(PATH)` 或 `python:$(MODULE_NAME)` 。
 - `-b BIND, --bind=BIND` - 指定要绑定的服务器嵌套字。服务器嵌套字可以用以下格式：`$(HOST)` , `$(HOST):$(POST)` 或者 `unix:$(PATH)` 。一个IP是一个有效的$(HOST)。
@@ -115,9 +112,9 @@ gunicorn --workers=2 test:app
 
 - `-n APP_NAME, --name=APP_NAME` - 如果安装了 `setproctitle` python模块，则可以调整Gunicorn进程的名字。
 
-### 集成方式
+## 集成方式
 
-#### Django
+### Django
 
 Gunicorn默认查找名为 `application` 的可供WSGI调用的对象。对于典型的Django项目，调用Gunicorn如下所示：  
 
@@ -131,7 +128,7 @@ gunicorn myproject.wsgi
 gunicorn --env DJANGO_SETTINGS_MODULE=myproject.settings myproject.wsgi
 ```
 
-### 实际操作
+## 实际操作
 
 ```bash
 gunicorn -w 4 -k gevent  RedQueen.wsgi:application
@@ -149,7 +146,7 @@ gunicorn -w 4 -k gevent  RedQueen.wsgi:application
 
 
 
-## 配置概述
+# 配置概述
 
 Gunicorn从三个地方拉取配置信息，优先级从低到高为：   
 
@@ -157,7 +154,7 @@ Gunicorn从三个地方拉取配置信息，优先级从低到高为：
 - 配置文件
 - 命令行
 
-### 命令行
+## 命令行
 
 优先级最高，如果在命令行中指定了一个选项，它将覆盖在应用程序中或配置文件中所指定的所有其他设置。并非所有Gunicorn设置都可以从命令行设置。要查看命令行设置的完整列表，你可以执行以下操作：  
 
@@ -165,7 +162,7 @@ Gunicorn从三个地方拉取配置信息，优先级从低到高为：
 gunicorn -h
 ```
 
-### 配置文件
+## 配置文件
 
 配置文件应该是有效的**Python源文件**。它只需要在文件系统中可读即可。更具体地说，它不需要是可导入的。任何Python都是有效的。只要考虑每次启动Gunicorn时都会运行（包括当你指示Gunicorn重新加载时）。要设置参数，没有特殊的语法，只需用Python语法赋值即可。  
 
@@ -205,13 +202,13 @@ gunicorn -c python:RedQueen.gunicorn_conf RedQueen.wsgi:application
 ...
 ```
 
-### 框架设置
+## 框架设置
 
 由于目前Gunicorn只对Paster应用框架有效，故再次不做讲解。有需要的看官方文档。  
 
 
 
-## 设置项清单
+# 设置项清单
 
 这里对Gunicorn的设置项做一个详细的介绍。有些设置只能写在配置文件中，设置的名字就是配置文件中的变量名。
 
@@ -223,9 +220,9 @@ gunicorn -c python:RedQueen.gunicorn_conf RedQueen.wsgi:application
 
 
 
-## 线上部署
+# 线上部署
 
-### 使用虚拟环境
+## 使用虚拟环境
 
 最好在项目的虚拟环境中使用pip安装gunicorn。
 
@@ -242,7 +239,7 @@ ALLOWED_HOSTS = ['*']
 
 
 
-### Gunicorn配置文件
+## Gunicorn配置文件
 
 gunicorn配置文件写在项目中的 `<项目路径>/RedQueen/RedQueen/gunicorn_conf.py` ：  
 
@@ -270,13 +267,13 @@ cd work/python/project/RedQueen
 gunicorn RedQueen.wsgi:application -c python:RedQueen.gunicorn_conf
 ```
 
-### Nginx配置
+## Nginx配置
 
 尽管，现在有很多HTTP代理服务器可用，但还是极力推荐使用Nginx。如果你选择了其他代理服务器，请注意，当你使用Gunicorn默认的worers的时候，客户端的缓存将特别慢。没有Nginx做很好的缓存，Gunicorn极易收到拒绝服务(denial-of-service )攻击。  
 
 简单的Nginx配置如下：  
 
-```Nginx config files
+```nginx
 # 设置worker进程数
 worker_processes 2;
 # 指定用户
@@ -381,7 +378,7 @@ sudo nginx -p ~/work/deploy/webservers/nginx  -c blog_nginx.conf
 
 打开nginx的access.log中可以看到：  
 
-```
+```bash
 127.0.0.1 - - [20/Nov/2018:00:14:55 +0800] "GET / HTTP/1.1" 301 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"
 # nginx将“/”重写为了“/cloudsen_blog”
 127.0.0.1 - - [20/Nov/2018:00:14:55 +0800] "GET /cloudsen_blog/ HTTP/1.1" 200 4555 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"
@@ -392,7 +389,7 @@ sudo nginx -p ~/work/deploy/webservers/nginx  -c blog_nginx.conf
 
 打开gunicorn的access.log中可以看到：  
 
-```
+```bash
 # gunicorn没有访问 “/”，也没有访问静态资源文件
 - - [20/Nov/2018:00:14:55 +0800] "GET /cloudsen_blog HTTP/1.0" 301 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"
 - - [20/Nov/2018:00:14:55 +0800] "GET /cloudsen_blog/ HTTP/1.0" 200 4555 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"
@@ -400,5 +397,7 @@ sudo nginx -p ~/work/deploy/webservers/nginx  -c blog_nginx.conf
 
 说明Nginx代理并重写了页面服务的http请求，然后通过unix domain socket转发给了Gunicorn，Gunicorn解析http，从Django项目中获取资源。但是呢静态资源由Nginx自己处理了，没有再交给Gunicorn。
 
+# 参考资料
 
+1. [gunicorn官方文档](http://docs.gunicorn.org/en/stable/)
 

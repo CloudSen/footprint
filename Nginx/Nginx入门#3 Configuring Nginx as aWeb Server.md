@@ -1,3 +1,5 @@
+[TOC]
+
 # Nginx Web Server #1 将Nginx配置为WEB服务器
 
 在顶层，将Nginx配置为一个WEB服务器的关键在于明确一些URLs，以及这些URLs如何去处理对资源的HTTP请求。在底层，配置文件定义了很多虚拟服务集 `server` ，它们控制并处理特定域或IP地址的请求。  
