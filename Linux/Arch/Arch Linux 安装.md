@@ -281,5 +281,15 @@ sudo pacman -S network-manager-applet
 reboot
 ```
 
+安装xorg时会提示安装显卡驱动，虚拟机千万不要安装nvidia或amd独显的驱动，不然重启会黑屏，只能看见鼠标。  
+若发生以上情况，则卸载nvidia驱动即可:  
+
+```bash
+# 查看驱动包的名字
+pacman -Q|grep nvidia
+# 卸载上面显示的驱动包
+pacman -R xxxx
+reboot
+```
 
 
