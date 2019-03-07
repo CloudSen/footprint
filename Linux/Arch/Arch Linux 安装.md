@@ -13,12 +13,13 @@
 ```shell
 ls /sys/firmware/efi/efivars
 ```
-
+如果出现 `No such file or directory` 则说明是 `BIOS` 方式启动的。  
 
 
 ### 检查网络连接
 
-Arch正常的安装是需要联网的，这一步至关重要。  
+Arch正常的安装是需要联网的，这一步至关重要。 
+`dhcpcd` 默认是开启探测**有线**网络设备的。   
 
 ```shell
 # 有线网使用dhcpcd获取ip
@@ -62,7 +63,7 @@ timedatectl set-ntp true
 
 目的：创建根目录(`/`)、交换区(swap)、用户区(home)。
 
-> 交换分区若内存够大或的固态硬盘就不需要设置，或者给8G就够了。
+> 若内存够大或的固态硬盘就不需要设置交换分区，或者给8G就够了。
 >
 > EFI安装还需要分一个512M的引导分区。
 >
@@ -135,13 +136,12 @@ mount /dev/sda3 /mnt/home
 vim /etc/pacman.d/mirrorlist
 ```
 
-用VIM打开源后，键入`/tsinghua`回车，搜索清华源，找到后，键入`dd`剪切清华那一行。  
+用VIM打开源后，在最上面加上阿里云共享镜像服务站 `Server = http://mirrors.aliyun.com/archlinux/$repo/os/$arch`。然后键入`:wq`保存并退出。
 
-键入`gg`回到文首，键入`P`粘贴到最前面位置。键入`:wq`保存并退出。
-
-执行一下命令，开始系统安装：
+执行以下命令，开始系统安装：
 
 ```shell
+# base-devel是额外包，它包含了gzip gcc sudo等工具
 pacstrap /mnt base base-devel
 ```
 
@@ -271,12 +271,13 @@ systemctl enable dhcpcd
 ## 安装KDE5图形界面
 
 ```bash
-pacman -S plasma-desktop
-pacman -S kdebase
-pacman -S ttf-dejavu ttf-liberation wqy-microhei
-pacman -S alsa-utils pulseaudio pulseaudio-alsa
+pacman -S xorg
+pacman -S plasma kde-applications
 pacman -S sddm
 systemctl enable sddm
+sudo systemctl disable netctl
+sudo systemctl enable NetworkManager
+sudo pacman -S network-manager-applet
 reboot
 ```
 
