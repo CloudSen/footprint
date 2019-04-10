@@ -303,3 +303,9 @@ systemctl  enable vmtoolsd
 systemctl  start vmtoolsd 
 ```
 
+## VMware分辨率自适应
+
+``` bash
+pacman -S xf86-input-vmmouse
+pacman -S xf86-video-vmware
+```
