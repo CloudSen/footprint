@@ -293,3 +293,13 @@ reboot
 ```
 
 
+
+## 安装VMtools
+
+``` bash
+pacman -S gtkmm3 open-vm-tools
+cat /proc/version > /etc/arch-release
+systemctl  enable vmtoolsd
+systemctl  start vmtoolsd 
+```
+
