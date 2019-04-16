@@ -558,11 +558,41 @@ material质感设计主题，现在加入了详细的设置界面，非常棒。
 
 ## ESLint
 
-纠正JavaScript的代码语法错误和规范错误
+纠正JavaScript的代码语法错误和规范错误。
 
 ## Pylint
 
-纠正Python的代码语法错误和规范错误  
+纠正Python的代码语法错误和规范错误。
+
+## Jrebel
+
+热部署神器。
+
+## Alibaba Java Coding Guidelines
+
+阿里巴巴JAVA开发规范，自动扫描和修正。
+
+## Bash Support
+
+bash脚本支持。
+
+## FindBugs
+
+扫描潜在Bug。
+
+## Vue.js
+
+vue的语法插件。
+
+## Element
+
+element ui 框架的语法插件。
+
+## Lombok
+
+java代码优雅神器，通过注解的方式减少大量无用代码。
+
+
 
 
 

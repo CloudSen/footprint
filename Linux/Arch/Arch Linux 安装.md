@@ -301,5 +301,79 @@ pacman -S gtkmm3 open-vm-tools
 cat /proc/version > /etc/arch-release
 systemctl  enable vmtoolsd
 systemctl  start vmtoolsd 
+systemctl  enable vmware-vmblock-fuse.service
+systemctl  start vmware-vmblock-fuse.service
 ```
+
+
+
+##  解决VMware无法调整分辨率
+
+首先使用 `xrandr` 命令列出当前系统可用的分辨率：  
+
+``` bash
+Screen 0: minimum 320 x 200, current 800 x 600, maximum 16384 x 16384
+Virtual-1 connected primary 800x600+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+   preferred     60.00*+
+   2560x1600     59.99  
+   1920x1440     60.00  
+   1856x1392     60.00  
+   1792x1344     60.00  
+   1920x1200     59.88  
+   1600x1200     60.00  
+   1680x1050     59.95  
+   1400x1050     59.98  
+   1280x1024     60.02  
+   1440x900      59.89  
+   1280x960      60.00  
+   1360x768      60.02  
+   1280x800      59.81  
+   1152x864      75.00  
+   1280x768      59.87  
+   1024x768      60.00  
+   800x600       60.32  
+   640x480       59.94  
+Virtual-2 disconnected (normal left inverted right x axis y axis)
+Virtual-3 disconnected (normal left inverted right x axis y axis)
+Virtual-4 disconnected (normal left inverted right x axis y axis)
+Virtual-5 disconnected (normal left inverted right x axis y axis)
+Virtual-6 disconnected (normal left inverted right x axis y axis)
+Virtual-7 disconnected (normal left inverted right x axis y axis)
+Virtual-8 disconnected
+```
+
+如果显示器分辨率没有出现在上面的列表中，如2k分辨率(2560*1440)，则需要手动添加。  
+
+首先使用cvt命令，得到某个分辨率的有效扫描频率：  
+
+``` bash
+cvt 2560 1440
+# 控制台输出如下
+# 2560x1440 59.96 Hz (CVT 3.69M9) hsync: 89.52 kHz; pclk: 312.25 MHz
+Modeline "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
+```
+
+然后根据以上输出，新建xrandr模式：  
+
+``` bash
+xrandr --newmode "2560x1440_60.00"  312.25  2560 2752 3024 3488  1440 1443 1448 1493 -hsync +vsync
+```
+
+然后把新增的模式添加到当前的输出设备：  
+
+``` bash
+xrandr --addmode Virtual-1 2560x1440_60.00
+```
+
+最后设置当前输出设备的分辨率：  
+
+``` bash
+xrandr --output Virtual-1 --mode 2560x1440_60.00
+```
+
+<span style="color:red;">注意，以上的操作只在本次会话中有效！</span>
+
+若想永久生效，则需要修改 `xorg.conf`，具体操作如下：  
+
+
 
