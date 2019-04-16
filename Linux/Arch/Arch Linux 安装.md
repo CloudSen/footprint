@@ -305,6 +305,7 @@ systemctl  enable vmware-vmblock-fuse.service
 systemctl  start vmware-vmblock-fuse.service
 ```
 
+<<<<<<< HEAD
 
 
 ##  解决VMware无法调整分辨率
@@ -377,3 +378,11 @@ xrandr --output Virtual-1 --mode 2560x1440_60.00
 
 
 
+=======
+## VMware分辨率自适应
+
+``` bash
+pacman -S xf86-input-vmmouse
+pacman -S xf86-video-vmware
+```
+>>>>>>> a59c0c742fb8e72a122840730216a2d64931de6f
