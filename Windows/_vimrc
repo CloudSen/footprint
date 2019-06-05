@@ -1,0 +1,85 @@
+"---------------------------------------------
+" Name: VIMRC FOR WINODWS
+" Author: CloudSen
+" Email: www.402645063@gmail.com
+"---------------------------------------------
+
+" Startup 编辑器启动时的一些配置 {{{
+filetype indent plugin on
+" vim 文件折叠方式为marker
+augroup ft_vim
+	au!
+	au FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+" General 通用设置 {{{
+set nocompatible
+set t_Co=256
+set nobackup
+"set spell spelllang=en_us
+set noswapfile
+set visualbell
+set history=1024
+set autochdir
+set autoread
+set whichwrap=b,s,<,>,[,]
+set nobomb
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+" vim 的默认寄存器和系统剪切板共享
+set clipboard+=unnamed
+" 设置 alt 键不映射到菜单栏
+set winaltkeys=no
+" 保存配置文件时自动重新加载配置
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" }}}
+
+" Lang & Encoding {{{
+set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
+set encoding=utf-8
+set langmenu=zh_CN
+let $LANG='en_US.UTF-8'
+" }}}
+
+" GUI {{{
+colorscheme inkpot 
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+set cursorline
+set hlsearch
+set number
+" 窗口大小
+set lines=35 columns=140
+" 行宽和自动折行
+set textwidth=80
+set wrap
+set linebreak
+set ruler
+" 分割出来的窗口位于当前窗口下边/右边
+set splitbelow
+set splitright
+" 不显示工具/菜单栏
+set guioptions+=T
+set guioptions+=m
+set guioptions+=L
+set guioptions+=r
+set guioptions+=b
+" 使用内置tab样式而不是gui
+set guioptions+=e
+set nolist
+set guifont=Hack:h12:cANSI
+set showmode
+" }}}
+
+" Formart {{{
+syntax on
+set autoindent
+set smartindent
+set tabstop=4
+set expandtab
+set softtabstop=4
+set foldmethod=indent
+filetype indent on
+set showmatch
+set listchars=tab:>-,trail:-
+" }}}
