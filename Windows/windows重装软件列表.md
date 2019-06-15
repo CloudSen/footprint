@@ -28,11 +28,22 @@
 
 - [Git](https://git-scm.com/download/win)
 
+    git config --global user.name "CloudSen"
+
+    git config --global user.email "www.402645063@gmail.com"
+
 - [Maven](http://maven.apache.org/download.cgi)
 
 - [Navicat](<https://www.cr173.com/soft/126934.html>)
 
 - [NodeJS](<https://nodejs.org/en/download/>)
+
+    配置：
+
+    npm config set prefix "...\node_global"
+    npm config set cache "...\node_cache"
+
+    新建环境变量NODE_PATH：...\\node_global\node_modules
 
 - [VSCODE](<https://code.visualstudio.com/>)
 
@@ -43,4 +54,10 @@
     激活码： **YZ718-4REEQ-08DHQ-JNYQC-ZQRD0**
 
 - [TeamViewer](<https://www.teamviewer.com/cn/download/windows/>)
+
+- [Oracle SQL Developer](<https://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html>)
+
+- [Oracle Database](<https://www.oracle.com/technetwork/database/enterprise-edition/downloads/index-092322.html>)
+
+- [Mysql Community](<https://dev.mysql.com/downloads/installer/>)
 

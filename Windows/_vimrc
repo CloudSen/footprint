@@ -4,16 +4,16 @@
 " Email: www.402645063@gmail.com
 "---------------------------------------------
 
-" Startup ç¼–è¾‘å™¨å¯åŠ¨æ—¶çš„ä¸€äº›é…ç½® {{{
+" Startup ±à¼­Æ÷Æô¶¯Ê±µÄÒ»Ğ©ÅäÖÃ {{{
 filetype indent plugin on
-" vim æ–‡ä»¶æŠ˜å æ–¹å¼ä¸ºmarker
+" vim ÎÄ¼şÕÛµş·½Ê½Îªmarker
 augroup ft_vim
 	au!
 	au FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
 
-" General é€šç”¨è®¾ç½® {{{
+" General Í¨ÓÃÉèÖÃ {{{
 set nocompatible
 set t_Co=256
 set nobackup
@@ -26,12 +26,12 @@ set autoread
 set whichwrap=b,s,<,>,[,]
 set nobomb
 set backspace=indent,eol,start whichwrap+=<,>,[,]
-" vim çš„é»˜è®¤å¯„å­˜å™¨å’Œç³»ç»Ÿå‰ªåˆ‡æ¿å…±äº«
+" vim µÄÄ¬ÈÏ¼Ä´æÆ÷ºÍÏµÍ³¼ôÇĞ°å¹²Ïí
 set clipboard+=unnamed
-" è®¾ç½® alt é”®ä¸æ˜ å°„åˆ°èœå•æ 
+" ÉèÖÃ alt ¼ü²»Ó³Éäµ½²Ëµ¥À¸
 set winaltkeys=no
-" ä¿å­˜é…ç½®æ–‡ä»¶æ—¶è‡ªåŠ¨é‡æ–°åŠ è½½é…ç½®
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" ±£´æÅäÖÃÎÄ¼şÊ±×Ô¶¯ÖØĞÂ¼ÓÔØÅäÖÃ
+"autocmd BufWritePost $MYVIMRC source $MYVIMRC
 " }}}
 
 " Lang & Encoding {{{
@@ -48,26 +48,26 @@ source $VIMRUNTIME/menu.vim
 set cursorline
 set hlsearch
 set number
-" çª—å£å¤§å°
-set lines=35 columns=140
-" è¡Œå®½å’Œè‡ªåŠ¨æŠ˜è¡Œ
+" ´°¿Ú´óĞ¡
+set lines=35 columns=120
+" ĞĞ¿íºÍ×Ô¶¯ÕÛĞĞ
 set textwidth=80
 set wrap
 set linebreak
 set ruler
-" åˆ†å‰²å‡ºæ¥çš„çª—å£ä½äºå½“å‰çª—å£ä¸‹è¾¹/å³è¾¹
+" ·Ö¸î³öÀ´µÄ´°¿ÚÎ»ÓÚµ±Ç°´°¿ÚÏÂ±ß/ÓÒ±ß
 set splitbelow
 set splitright
-" ä¸æ˜¾ç¤ºå·¥å…·/èœå•æ 
-set guioptions+=T
-set guioptions+=m
+" ²»ÏÔÊ¾¹¤¾ß/²Ëµ¥À¸
+set guioptions-=T
+set guioptions-=m
 set guioptions+=L
 set guioptions+=r
 set guioptions+=b
-" ä½¿ç”¨å†…ç½®tabæ ·å¼è€Œä¸æ˜¯gui
-set guioptions+=e
+" Ê¹ÓÃÄÚÖÃtabÑùÊ½¶ø²»ÊÇgui
+set guioptions-=e
 set nolist
-set guifont=Hack:h12:cANSI
+set guifont=Hack:h11:cANSI
 set showmode
 " }}}
 
@@ -82,4 +82,16 @@ set foldmethod=indent
 filetype indent on
 set showmatch
 set listchars=tab:>-,trail:-
+" }}}
+
+" Plugins {{{
+call plug#begin('C:\Program Files (x86)\Vim\plugged')
+" ²ÊºçÀ¨ºÅ
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+" °ü¹üÄÚÈİ
+Plug 'tpope/vim-surround'
+" ¿ìËÙ±ê¼ÇÌø×ª
+Plug 'kshenoy/vim-signature'
+call plug#end()
 " }}}
