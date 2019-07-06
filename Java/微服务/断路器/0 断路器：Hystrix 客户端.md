@@ -119,5 +119,9 @@ Netflix已经创建了一个名为 `Hystrix` 的库，它实现了马丁弗勒�
 
    没有断路发生时，一直处于 `ping` 状态；短路发生后，能看到一大片数据，此时需要使用 `Hystrix Dashboard` 来监控。  
 
+## Bibbon和Hystrix的超时
 
+当你使用 `HystrixCommand` 包装 `Ribbon` 时，你需要确保 `Hystrix` 的超时时间大于 `Ribbon` 的超时时间（包含了潜在的重试次数）。比如，你的 `Ribbon` 超时时间设置的1秒，然后设置了重试次数是3次，那么你的 `Hystrix` 超时时间一定是要大于3秒。  
+
+ 
 
