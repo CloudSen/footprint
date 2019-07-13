@@ -200,17 +200,26 @@ zuul:
 
 ### Routes端点
 
-可以通过 `endpoints.routes.enabled=false` 来关闭该端点。  
+在端点管理中开启 `routes` 端点：  
 
-通过GET请求访问 `/routes` 端点，会返回已经映射的路由列表：  
+```
+management:
+  endpoints:
+    web:
+      exposure:
+        include: routes
+```
+
+通过GET请求访问 `/actuator/routes` 端点，会返回已经映射的路由列表：  
 
 ```json
 {
-  /stores/**: "http://localhost:8081"
+    "/api/sys-management/**": "system-management",
+    "/api/demo-for-test/**": "demo-for-test"
 }
 ```
 
-访问 `/routes?format=details` 会返回更详细的信息：  
+访问 `/routes?format=details` 会返回更详细的信息：   
 
 ```json
 {
@@ -231,5 +240,90 @@ zuul:
 
 ### Filters端点
 
-通过GET请求访问 `/filters` 端点，能够返回一个以类型为key的map。
+在端点管理中开启 `filters` 端点：  
+
+```json
+management:
+  endpoints:
+    web:
+      exposure:
+        include: filters
+```
+
+通过GET请求访问 `/actuator/filters` 端点，能够返回一个以类型为key的map：  
+
+```json
+{
+    "error": [
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.post.SendErrorFilter",
+            "order": 0,
+            "disabled": false,
+            "static": true
+        }
+    ],
+    "post": [
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.post.SendResponseFilter",
+            "order": 1000,
+            "disabled": false,
+            "static": true
+        }
+    ],
+    "pre": [
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.pre.DebugFilter",
+            "order": 1,
+            "disabled": false,
+            "static": true
+        },
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.pre.FormBodyWrapperFilter",
+            "order": -1,
+            "disabled": false,
+            "static": true
+        },
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.pre.Servlet30WrapperFilter",
+            "order": -2,
+            "disabled": false,
+            "static": true
+        },
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.pre.ServletDetectionFilter",
+            "order": -3,
+            "disabled": false,
+            "static": true
+        },
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.pre.PreDecorationFilter",
+            "order": 5,
+            "disabled": false,
+            "static": true
+        }
+    ],
+    "route": [
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.route.SimpleHostRoutingFilter",
+            "order": 100,
+            "disabled": false,
+            "static": true
+        },
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.route.RibbonRoutingFilter",
+            "order": 10,
+            "disabled": false,
+            "static": true
+        },
+        {
+            "class": "org.springframework.cloud.netflix.zuul.filters.route.SendForwardFilter",
+            "order": 500,
+            "disabled": false,
+            "static": true
+        }
+    ]
+}
+```
+
+
 
