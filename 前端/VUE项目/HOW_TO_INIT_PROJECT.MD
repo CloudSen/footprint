@@ -54,7 +54,7 @@ vue add router
 vue add vuex
 ```
 
-***安装UI框架——Element UI***  
+***【可选】安装UI框架——Element UI***  
 
 > [官方文档](https://element.eleme.cn/#/zh-CN/component/installation)
 
@@ -69,6 +69,66 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(Element)
+```
+
+***安装UI框架——Vuetify UI***  
+
+> [官方文档]([https://vuetifyjs.com](https://vuetifyjs.com/))
+
+直接使用vuetify插件，帮我们自动导入框架：  
+
+```bash
+vue add vuetify
+```
+
+插件中包含了 `vuetify-loader`， 可以让webpack仅读取使用的组件，无需额外配置。
+
+***安装markdown-it-vue***  
+
+用于渲染MD文章。  
+
+```bash
+npm i markdown-it-vue -S
+```
+
+***安装vue-fragment***  
+
+在vue文件中，经常有很多无意义的 `div` 标签，通过这个插件的 `<fragment></fragment>` 标签来省略很多无意义div。  
+
+```bash
+npm i vue-fragment -S
+```
+
+***安装particles.js***  
+
+用于动态粒子效果背景：  
+
+```bash
+npm i particles.js -S
+```
+
+***安装highlight.js***  
+
+用于代码高亮：  
+
+```bash
+npm i highlight.js -S
+```
+
+***安装vue-parallaxy***  
+
+用于开发视差效果：  
+
+```bash
+npm i vue-parallaxy -S
+```
+
+***安装markdown-it***  
+
+用于渲染文章：  
+
+```bash
+npm i markdown-it -S
 ```
 
 #### 开发依赖
@@ -88,9 +148,15 @@ Vue.use(Element)
 - `babel-eslint`
 - `eslint-plugin-vue` 
 
-并且已经自动生成配置文件：  
+这还不够，我们需要 `eslint-plugin-import` 来对import语法进行检测：  
 
+```bash
+npm i eslint-plugin-import -D
 ```
+
+eslint配置文件如下：  
+
+```json
 module.exports = {
   root: true,
   env: {
@@ -109,12 +175,27 @@ module.exports = {
     'semi': ['error', 'never'],
     // 不能使用alert
     'no-alert': 'error',
+    // 块之前的空格
+    'space-before-blocks'        : ['error', { 'functions': 'always', 'keywords': 'always', 'classes': 'always' }],
+    // 方法定义相关的空格
+    'space-before-function-paren': ['error', { 'anonymous': 'always', 'named': 'always', 'asyncArrow': 'always' }],
+    // 解决Missing file extension "vue" for "xxxx" (import/extensions)
+    'import/extensions': ['error', 'always', {
+      js: 'never',
+      mjs: 'never',
+      jsx: 'never',
+      ts: 'never',
+      tsx: 'never',
+      vue: 'never'
+    }]
   },
   parserOptions: {
     parser: 'babel-eslint',
   },
 };
 ```
+
+
 
 ## 配置VSCODE
 
@@ -131,7 +212,6 @@ module.exports = {
 ```json
 //  启用保存时自动修复,默认只支持.js文件
 "eslint.autoFixOnSave": true,
-/* vetur 配置 */
 "eslint.validate": [
   "javascript",
   // 检测vue文件
@@ -144,6 +224,24 @@ module.exports = {
     "autoFix": true
   },
 ],
+// Vetur 格式化配置
+"vetur.format.defaultFormatterOptions": {
+    "prettyhtml": {
+        // 单行超过100个长度的时候开始换行
+        "printWidth": 100,
+        "tabWidth": 2,
+        "useTabs": false,
+        "singleQuote": false,
+        "wrapAttributes": true,
+        "sortAttributes": true,
+    },
+},
+// 禁用vetur的JS格式化，交给eslint处理
+"vetur.format.defaultFormatter.js": "none",
+// 保存和粘贴时自动格式化
+"editor.defaultFormatter": "octref.vetur",
+"editor.formatOnPaste": true,
+"editor.formatOnSave": true,
 ```
 然后在项目根目录下面新建 `jsconfig.json` 文件，这个文件会包含所有的vue文件：  
 

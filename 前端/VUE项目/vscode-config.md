@@ -20,13 +20,13 @@ vue-cli生成webpack项目时，强烈推荐选择eslint的Airbnb规范。
 
 ### 【必备】Vetur
 
-VUE开发必备插件，能配合Eslint插件对代码规范进行检查。  
+VUE开发必备插件，能配合Eslint插件对代码规范进行检查。 
 
 - Syntax-highlighting 语法高亮
 - 支持Snippet代码片段
 - Emmet格式化
 - Linting / Error Checking 分析代码以查找潜在错误
-- Formatting 自带格式化
+- Formatting 自带各种格式化
 - Auto Completion 自动补全
 - 支持 Debugging 调试
 
@@ -59,6 +59,22 @@ VUE开发必备插件，能配合Eslint插件对代码规范进行检查。
 ### 【可选】GitLens
 
 Git必备插件。  
+
+### 【可选】Complete Statement
+
+类似与IDEA中的 complete statement `ctrl` + `shift` + `enter`。  
+
+安装好之后，使用快捷键 `ctrl` + `;` 即可。
+
+### 【可选】Element UI Snippets
+
+Element UI 的代码模板插件。  
+
+更多见，[模板缩写](https://marketplace.visualstudio.com/items?itemName=SS.element-ui-snippets) 。
+
+### 【可选】vuetify-vscode
+
+vuetify ui框架插件，自带提示功能和代码模板。  
 
 
 
@@ -133,7 +149,7 @@ rules:
 ```json
 //  启用保存时自动修复,默认只支持.js文件
 "eslint.autoFixOnSave": true,
-/* vetur 配置 */
+/* vetur 相关配置 */
 "eslint.validate": [
   "javascript",
   // 检测vue文件
@@ -146,6 +162,8 @@ rules:
     "autoFix": true
   },
 ],
+// 禁用vetur的JS格式化，交给eslint处理
+"vetur.format.defaultFormatter.js": "none",
 ```
 然后在项目根目录下面新建 `jsconfig.json` 文件，这个文件会包含所有的vue文件：  
 
@@ -164,3 +182,17 @@ rules:
     }
 }
 ```
+
+### vuetify-vscode插件配置
+
+vuetify-vscode默认配置无法在 `" "` 之间进行提示，需要对vscode进行额外配置。  
+
+在vscode用户设置文件中，加入以下内容：  
+
+```json
+/* vuetify 插件配置 */
+    "editor.quickSuggestions": {
+      "strings": true,
+    }
+```
+
