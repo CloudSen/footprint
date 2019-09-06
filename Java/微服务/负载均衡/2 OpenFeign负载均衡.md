@@ -8,7 +8,7 @@
 
 ```xml
 <dependency>
-	<groupId>org.springframework.cloud</groupId>
+    <groupId>org.springframework.cloud</groupId>
     <artifactId>spring-cloud-starter-openfeign</artifactId>
 </dependency>
 ```
@@ -17,20 +17,20 @@
 
 3. 新建接口并通过 `@FeignClient` 等注解，定义Feign：  
 
-   ```java
-   @FeignClient("stores")
-   public interface StoreClient {
-       @RequestMapping(method = RequestMethod.GET, value = "/stores")
-       List<Store> getStores();
-   
-       @RequestMapping(method = RequestMethod.POST, value = "/stores/{storeId}", consumes = "application/json")
-       Store update(@PathVariable("storeId") Long storeId, Store store);
-   }
-   ```
+```java
+@FeignClient("stores")
+public interface StoreClient {
+    @RequestMapping(method = RequestMethod.GET, value = "/stores")
+    List<Store> getStores();
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/stores/{storeId}", consumes = "application/json")
+    Store update(@PathVariable("storeId") Long storeId, Store store);
+}
+```
 
-   `@FeignClient` 注解接收一个字符串，它表示了客户端名字（跟 `spring.application.name对应` ），用于创建一个Ribbon负载均衡器。你也可以使用 `url` 参数指定一个URL地址（可以是完整地址或者hostname）。在 `application context` 中的bean的名字就是这个接口名。若要自定义bean的名字，可以通过 `qualifier` 属性指定。  
+`@FeignClient` 注解接收一个字符串，它表示了客户端名字（跟 `spring.application.name对应` ），用于创建一个Ribbon负载均衡器。你也可以使用 `url` 参数指定一个URL地址（可以是完整地址或者hostname）。在 `application context` 中的bean的名字就是这个接口名。若要自定义bean的名字，可以通过 `qualifier` 属性指定。  
 
-   上面创建的Ribbon负载均衡器会去发现名为stores服务的物理地址。如果你使用了Eureka，它会在Eureka注册中心获取。如果没有使用Eureka，你可以通过简单的外部配置来指定一个服务列表（[详情见Ribbon配置说明](https://cloud.spring.io/spring-cloud-static/Greenwich.SR2/multi/multi_spring-cloud-ribbon.html#spring-cloud-ribbon-without-eureka)）。  
+上面创建的Ribbon负载均衡器会去发现名为stores服务的物理地址。如果你使用了Eureka，它会在Eureka注册中心获取。如果没有使用Eureka，你可以通过简单的外部配置来指定一个服务列表（[详情见Ribbon配置说明](https://cloud.spring.io/spring-cloud-static/Greenwich.SR2/multi/multi_spring-cloud-ribbon.html#spring-cloud-ribbon-without-eureka)）。  
 
 
 

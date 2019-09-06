@@ -1,12 +1,16 @@
-# 如何搭建VUE前端开发环境
+# WINDOWS搭建VUE前端开发环境
 
 ## 环境的搭建
 
 ### 安装Node.js
 
-...  
+1. [官网下载安装包](https://nodejs.org/en/download/current/)；
+2. 安装完毕后，cmd中键入 `node --version` 查看是否安装成功；
+3. 配置 `npm` 设置全局安装位置： `npm config set prefix "D:\soft\npm\node_global"`；
+4. 配置 `npm` 设置缓存位置：`npm config set cache "D:\soft\npm\node_cache"`
 
 ### 安装VUE-CLI3脚手架
+
 > [官方文档](https://cli.vuejs.org/zh/guide/#%E8%AF%A5%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E4%BB%B6)
 
 执行以下指令，全局安装脚手架：  
@@ -129,6 +133,14 @@ npm i vue-parallaxy -S
 
 ```bash
 npm i markdown-it -S
+```
+
+***安装Axios***  
+
+用于ajax请求：  
+
+```bash
+npm i axios -S
 ```
 
 #### 开发依赖
