@@ -138,6 +138,12 @@ Server:
   GitCommit:        fec3683
 ```
 
+### 查看Docker详细信息
+
+```
+sudo docker info
+```
+
 ### 检查Docker是否正常使用
 
 ```bash
@@ -177,6 +183,8 @@ For more examples and ideas, visit:
 
 **列出已有的镜像列表：**  
 
+使用 `docker image ls` 或者 `docker images` ：  
+
 ```bash
 sudo docker image ls
 
@@ -195,3 +203,4 @@ CONTAINER ID   IMAGE          COMMAND     CREATED          STATUS     ...
 ```
 
 到此，说明已成功安装Docker，并运行了一个测试镜像。  
+
