@@ -25,7 +25,7 @@ WORK IT HARDER, MAKE IT BETTER, DO IT FASTER, MAKE US STRONGER.
 
   ***财务部***
 
-- <span style="color:#329ba9">Multi-task:</span> 同时完成三个部门的工作；
+- <span style="color:#329ba9">Multi-task:</span> 同时完成三个部门的内部信息化工作；
 - <span style="color:#329ba9">Refactor:</span> 重新设计了财务报表的代码层次，使得开发效率提高了200%；
 
 ## <span style="color:#329ba9">重庆晨鲸科技有限公司（2018年11月 ~ 2019年4月）</span>
@@ -73,11 +73,12 @@ WORK IT HARDER, MAKE IT BETTER, DO IT FASTER, MAKE US STRONGER.
 - <span style="color:#27929f">后端框架：</span>Spring / Django / Spring Boot / Spring Cloud / Spring Data / JPA / MyBatis / MyBatis-Plus
 - <span style="color:#27929f">前端框架：</span>Bootstrap4 / jQuery / VUE-CLI3 / VUEX / VUE Router / Element-UI / Vuetify
 - <span style="color:#27929f">中间件：</span> Redis / RabbitMQ
-- <span style="color:#27929f">系统开发环境：</span>Linux / Windows
+- <span style="color:#27929f">系统开发环境：</span>Linux(Arch | Ubuntu) / Windows
 - <span style="color:#27929f">数据库相关：</span>MySQL / Oracle / SQLite
 - <span style="color:#27929f">版本管理：</span>Git / SVN
 - <span style="color:#27929f">部署：</span>Docker
-- <span style="color:#27929f">IDE/Editor：</span> JetBrains IDEA / VS Code
+- <span style="color:#27929f">IDE/Editor：</span> JetBrains IDEA / VS Code / VIM
 - <span style="color:#27929f">代码规范：</span> 阿里巴巴JAVA规范 / ESLint
 
 其他的技术我会利用空余时间，查看官方文档，学习并应用。      
+
