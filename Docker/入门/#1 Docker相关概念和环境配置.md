@@ -53,12 +53,15 @@ docker --version
 sudo docker version
 ## 显示Docker的信息
 sudo docker info
+## 显示正在运行中的容器
+sudo docker ps
 
 # 镜像
 ## 运行镜像
 sudo docker run <镜像名>
 ## 列出已有的镜像
 sudo docker image ls
+sudo docker images
 
 #容器
 ### 列出正在运行中的容器
