@@ -58,27 +58,46 @@ rm -rf fonts
 
 第三方主题存放在:  `~/.oh-my-zsh/custom/themes/`  
 
+安装 [spaceship](https://github.com/denysdovhan/spaceship-prompt) 主题：  
+
+```bash
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
+```
+
+```bash
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+```
+
 ### 配置
 
 修改 `.zshrc` ，加入以下内容，还有很多插件后期再介绍：  
 
 ```bash
 # 修改主题
-ZSH_THEME="agnoster"
+ZSH_THEME="spaceship"
 
-# easy aliases
+# Useful aliases
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
-alias getip="curl -i http://ip.cn"
+alias getIp="curl cip.cc"
+# Terminal Proxy
+alias enable_proxy="export ALL_PROXY=socks5h://127.0.0.1:1080"
+alias disable_proxy="unset ALL_PROXY"
+# VNC remote control
+alias start_vnc="vncserver -geometry 1366x768 -alwaysshared -depth 24 -dpi 96 :1"
+alias stop_vnc="vncserver -kill :1"
 
 # Ibus
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+ibus-daemon -drx
 
-# Terminal Proxy
-alias setproxy="export ALL_PROXY=socks5://127.0.0.1:1080"
-alias unsetproxy="unset ALL_PROXY"
+# Maven
+export JAVA_HOME=/usr/lib/jvm/java-8-jdk
+export MAVEN_HOME=/home/cloudsen/Download/apache-maven-3.6.2/
+export PATH="$MAVEN_HOME/bin:$PATH"
+
 
 # Python virtualenv wrapper
 export WORKON_HOME=$HOME/work/python/virtual_env
@@ -293,7 +312,15 @@ source ~/.zshrc
 
 `System Settings` > NetWork中的`Settings` > `Proxy` > `Use manually specified proxy configurations` > 'SockS Proxy' 设置为 `127.0.0.1` ，端口 `1080`
 
+### proxychains-ng 自动配置代理
 
+当使用Git的时候，需要设置http、https、git://、ssh等方式的代理，非常麻烦，通过 [proxychains](https://github.com/rofl0r/proxychains-ng) ，我们无需再进行复杂的设置，它可以通过hack的方式自动帮我们代理。  
+
+安装： `yay proxychains-ng`  
+
+配置：编辑 `/etc/proxychains.conf` 文件的最后一行为你的socks5代理，如 `socks5 127.0.0.1 1080` 保存即可  
+
+使用： 在需要代理的软件前加上它就行了，如 `proxychains git clone xxx`
 
 ## Google Chrome
 
@@ -372,7 +399,13 @@ sudo vim /etc/makepkg.conf
 yay -Syyu
 ```
 
-  
+## VLC
+
+视频播放器。  
+
+```
+yay -S vlc
+```
 
 ## cmatrix
 
@@ -414,6 +447,23 @@ ssh blogvps
 
 
 
+## Latte-Dock
+
+OS X那样的应用停靠栏，可定制性高，非常漂亮。  
+
+```bash
+yay latte-dock
+```
+
+
+## Team Viewer
+
+远程桌面控制。  
+
+```bash
+yay teamviewer
+```
+
 ## 字体
 
 > 更多Linux字体美化见[Linux下终极字体配置方案](https://ohmyarch.github.io/2017/01/15/Linux%E4%B8%8B%E7%BB%88%E6%9E%81%E5%AD%97%E4%BD%93%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88/)
@@ -430,7 +480,7 @@ yay -S ttf-droid
 yay -S ttf-monaco
 ```
 
-终端我用的Noto Sans Mono for Powerline 或者 Droid Sans Mono for Powerline。
+终端我用的Noto Sans Mono for Powerline 或者 Hack。
 
 ![font1](https://s1.ax1x.com/2018/12/19/FDyLIH.png)  
 
@@ -444,10 +494,68 @@ chrome我设置的文泉微米黑。
 
 
 
+## Rime 中州韵输入法
+
+Linux端最好用的中文输入法。  
+
+**安装：**  
+
+```bash
+yay -S ibus ibus-qt ibus-rime
+```
+
+**IBUS配置：**  
+
+在 `~/.zshrc` 中加入：  
+
+```
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+# 保证ibus后台启动
+ibus-daemon -x -d
+```
+
+执行 `qtconfig-qt4` ，在 "Interface" -> "Default Input Method"中，将默认的输入法设置为"ibus"而不是"xim"。  
+
+然后执行 `ibus-setup` ，添加中文输入法。
+
+**RIME配置：**  
+
+在 `~/.config/ibus/rime` 目录下，创建以下两个文件。  
+
+`default.custom.yaml` 设置默认预选文字为9个  
+
+```yaml
+patch:
+  "menu/page_size": 9
+```
+
+`luna_pinyin.custom.yaml` 设置明月拼音默认为简体输入  
+
+```yaml
+patch:
+  switches:                   # 注意縮進
+    - name: ascii_mode
+      reset: 0                # reset 0 的作用是當從其他輸入方案切換到本方案時，
+      states: [ 中文, 西文 ]  # 重設爲指定的狀態，而不保留在前一個方案中設定的狀態。
+    - name: full_shape        # 選擇輸入方案後通常需要立即輸入中文，故重設 ascii_mode = 0；
+      states: [ 半角, 全角 ]  # 而全／半角則可沿用之前方案中的用法。
+    - name: simplification
+      reset: 1                # 增加這一行：默認啓用「繁→簡」轉換。
+      states: [ 漢字, 汉字 ]
+
+```
+
+**使用：**  
+
+点击图标，重新部署，然后通过windows + 空格进行输入法切换。  
+
 ## Win10&Linux双系统，系统时间问题
 
 WIN10和Linux系统同时安装后，会发现WIN的时间比实际时间早了8小时。  
 在WINDOWS中管理员方式运行 `PowerShell` ,键入以下内容后 `重启` ，即可修复：  
+
 ```bash
 Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
 ```
