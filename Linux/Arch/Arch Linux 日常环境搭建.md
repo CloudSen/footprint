@@ -6,6 +6,70 @@
 
 
 
+## 换国内源
+
+镜像源：  
+
+```bash
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+
+vim /etc/pacman.d/mirrorlist
+```
+
+```
+## Aliyun
+Server = http://mirrors.aliyun.com/archlinux/$repo/os/$arch
+## qing hua
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch
+## USTC
+Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
+## shang hai jiao tong
+Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch
+```
+
+社区仓库源：  
+
+```bash
+cp /etc/pacman.conf /etc/pacman.conf.backup
+
+vim /etc/pacman.conf
+```
+
+追加：  
+
+```
+[archlinuxcn]
+# The Chinese Arch Linux communities packages.
+# SigLevel = Optional TrustedOnly
+SigLevel = Optional TrustAll
+# 清华大学
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+```
+
+AUR源：  
+
+```bash
+yay --aururl https://aur.tuna.tsinghua.edu.cn --save
+```
+
+查看当前配置：  
+
+```bash
+yay -P -g
+```
+
+```
+{
+        "aururl": "https://aur.tuna.tsinghua.edu.cn",
+        "buildDir": "/home/cloudsen/.cache/yay",
+        ......
+}
+```
+
+
+
+
+
 ## ZSH
 
 大名鼎鼎的 `ZSH` 就不解释了。主要是安装后面的 `oh-my-zsh`
@@ -206,6 +270,10 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
+
+### 配置
+
+彩色输出：将 `/etc/pacman.conf` 文件中 `Color` 的注释去掉。  
 
 ### 使用
 
