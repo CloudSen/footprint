@@ -206,6 +206,17 @@ vuetify-vscode默认配置无法在 `" "` 之间进行提示，需要对vscode�
     "editor.formatOnPaste": true,
     "breadcrumbs.enabled": false,
     "editor.renderWhitespace": "all",
-    "vetur.format.defaultFormatter.js": "none"
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\cmd.exe",
+    "vetur.format.defaultFormatter.js": "none",
+    //  启用保存时自动修复
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "eslint.format.enable": true,
+    "eslint.validate": [
+        "javascript",
+        "vue",
+        "html",
+    ],
 }
 ```
