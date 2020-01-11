@@ -9,7 +9,7 @@
 3. 配置 `npm` 设置全局安装位置： `npm config set prefix "D:\soft\npm\node_global"`；
 4. 配置 `npm` 设置缓存位置：`npm config set cache "D:\soft\npm\node_cache"`
 5. 安装淘宝镜像 `cnpm`：`npm install -g cnpm --registry=https://registry.npm.taobao.org`  
-6. 将 `cnpm` 添加到 `PATH` 环境变量中：添加 `D:\Soft\NPM\node_global`  
+6. 将全局安装位置添加到 `PATH` 环境变量中：添加 `D:\Soft\NPM\node_global`  
 7. 检查安装是否成功：`node --version`, `npm --version`, `cnpm --version`
 
 ### 安装VUE-CLI3脚手架
