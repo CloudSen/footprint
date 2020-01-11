@@ -22,6 +22,8 @@
 npm install -g @vue/cli
 ```
 
+检查VUE脚手架版本： `vue -V`
+
 ### 通过VUE脚手架新建项目
 
 1. 以终端的方式：  
