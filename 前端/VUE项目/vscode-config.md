@@ -196,7 +196,8 @@ vuetify-vscode默认配置无法在 `" "` 之间进行提示，需要对vscode�
     }
 ```
 
-## es配置文件
+## vs配置文件
+
 ```
 {
     "workbench.iconTheme": "vscode-icons",

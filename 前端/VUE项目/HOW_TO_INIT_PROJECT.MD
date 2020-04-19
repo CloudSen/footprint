@@ -1,3 +1,5 @@
+[TOC]
+
 # WINDOWS搭建VUE前端开发环境
 
 ## 环境的搭建
@@ -92,12 +94,12 @@ vue add vuetify
 
 插件中包含了 `vuetify-loader`， 可以让webpack仅读取使用的组件，无需额外配置。
 
-***安装markdown-it-vue***  
+***安装markdown-it***
 
 用于渲染MD文章。  
 
 ```bash
-npm i markdown-it-vue -S
+npm i markdown-it -S
 ```
 
 ***安装vue-fragment***  
@@ -210,6 +212,18 @@ module.exports = {
     parser: 'babel-eslint',
   },
 };
+```
+
+***CSS-Loader***  
+
+```bash
+npm i css-loader -D
+```
+
+***Material Icons***  
+
+```bash
+npm i material-design-icons-iconfont -D
 ```
 
 
