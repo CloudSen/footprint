@@ -1,5 +1,18 @@
 [TOC]
 
+# 概要
+
+## 你将获得
+
+在Linux环境(Arch&Ubuntu)中，成功安装Docker，并运行HelloWorld镜像。
+
+## 预准备
+
+- 通畅的网络
+- Arch 或 Ubuntu系统
+
+
+
 # Docker社区版安装和测试
 
 Docker社区引擎的定位是为小型团队或个人开发者提供入门体验。它有三种版本：stable，test和nightly：  
@@ -12,7 +25,7 @@ Docker社区引擎的定位是为小型团队或个人开发者提供入门体�
 
 桌面系统支持：MacOS和Windows。  
 
-服务端支持：CentOS、Debian、Fedora、Ubuntu。
+服务端支持：CentOS、Debian、Fedora、Ubuntu、Raspbian
 
 你也可以下载[二进制文件](https://docs.docker.com/install/linux/docker-ce/binaries/)手动安装到自己喜欢的Linux版本。  
 
@@ -95,8 +108,6 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
-
-
 
 ## 测试安装是否成功
 
@@ -203,4 +214,10 @@ CONTAINER ID   IMAGE          COMMAND     CREATED          STATUS     ...
 ```
 
 到此，说明已成功安装Docker，并运行了一个测试镜像。  
+
+
+
+# 参考
+
+- 官方文档：[Install Docker Engine](https://docs.docker.com/engine/install/)
 
