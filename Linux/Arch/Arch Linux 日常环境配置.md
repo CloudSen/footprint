@@ -1,5 +1,7 @@
 # Arch Linux 日常环境配置
 
+> 前提：没有安装 kde-applications 包。
+
 [TOC]  
 
 ## 文件管理器
@@ -190,4 +192,59 @@ ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/the
 主题安装完成后，修改`.zshrc`配置文件中的`ZSH_THEME="spaceship"`。  
 
 ## 中文输入法
+
+推荐Rime中州韵输入法。个人觉得是Linux端最好用的中文输入法。  
+
+安装：  
+
+```
+yay -S ibus ibus-qt ibus-rime
+```
+
+IBUS配置：  
+
+在 `~/.zshrc` 中加入：  
+
+```
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+# 保证ibus后台启动
+ibus-daemon -x -d
+```
+
+然后执行 `ibus-setup` ，添加中文输入法。  
+
+RIME配置：  
+
+在 `~/.config/ibus/rime` 目录下，创建以下两个文件。  
+
+`default.custom.yaml` 设置默认预选文字为9个  
+
+```yaml
+patch:
+  "menu/page_size": 9
+```
+
+`luna_pinyin.custom.yaml` 设置明月拼音默认为简体输入  
+
+```yaml
+patch:
+  switches:                   # 注意縮進
+    - name: ascii_mode
+      reset: 0                # reset 0 的作用是當從其他輸入方案切換到本方案時，
+      states: [ 中文, 西文 ]  # 重設爲指定的狀態，而不保留在前一個方案中設定的狀態。
+    - name: full_shape        # 選擇輸入方案後通常需要立即輸入中文，故重設 ascii_mode = 0；
+      states: [ 半角, 全角 ]  # 而全／半角則可沿用之前方案中的用法。
+    - name: simplification
+      reset: 1                # 增加這一行：默認啓用「繁→簡」轉換。
+      states: [ 漢字, 汉字 ]
+
+```
+
+使用：    
+
+点击图标，重新部署，然后通过windows + 空格进行输入法切换。  
+
+
 
