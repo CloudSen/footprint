@@ -48,11 +48,11 @@ makepkg -si
 
  Arch Linux 中文社区驱动的非官方软件仓库，包含许多官方仓库未提供的额外的软件包，以及已有软件的 git 版本等变种。  
 
-编辑`/etc/pacman.conf` 文件，在末尾加入[最近地区的镜像地址](https://github.com/archlinuxcn/mirrorlist-repo)：  
+编辑`/etc/pacman.conf` 文件，在末尾加入[最近地区的镜像地址](https://github.com/archlinuxcn/mirrorlist-repo)，推荐使用华为云：  
 
 ```
 [archlinuxcn]
-Server = https://mirrors.cqu.edu.cn/archlinuxcn/$arch
+Server = https://repo.huaweicloud.com/archlinuxcn/$arch
 ```
 
 之后安装 `archlinuxcn-keyring `包以导入 GPG key。  
