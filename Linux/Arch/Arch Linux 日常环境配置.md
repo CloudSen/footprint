@@ -4,12 +4,22 @@
 
 [TOC]  
 
-## 文件管理器
+## KDE文件管理器
 
 安装KDE桌面的文件管理GUI软件：  
 
 ```
 pacman -S konqueror
+```
+
+
+
+## KDE截图工具
+
+快捷键`PrtSc`截图：  
+
+```
+pacman -S spectacle
 ```
 
 
