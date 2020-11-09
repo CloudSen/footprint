@@ -34,6 +34,16 @@ pacman -S yakuake
 
 
 
+## 密钥环
+
+用于存储密码、密钥。  
+
+```
+pacman -S gnome-keyring
+```
+
+
+
 ## yay AUR安装神器
 
 ```
