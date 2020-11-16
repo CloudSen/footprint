@@ -12,6 +12,63 @@ yay net-tools
 
 
 
+## 数据库环境
+
+### Mariadb
+
+> 参考[Arch Wiki Mariadb](https://wiki.archlinux.org/index.php/MariaDB#Installation)
+
+**安装**  
+
+```
+yay -S mariadb
+```
+
+**配置**
+
+```
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+```
+
+**启动**  
+
+```
+systemctl start mariadb
+systemctl enable mariadb
+```
+
+**安全配置（可选）**  
+
+```
+sudo mysql_secure_installation
+```
+
+**添加用户**  
+
+先使用root用户登录，默认密码为空：  
+
+```
+sudo mysql -u root -p
+```
+
+添加用户，并分配权限：  
+
+```
+CREATE USER 'clouds3n'@'*' IDENTIFIED BY 'cloudsen';
+GRANT ALL PRIVILEGES ON *.* TO 'clouds3n'@'*';
+FLUSH PRIVILEGES;
+```
+
+**安装Mysql-Workbench**  
+
+```
+yay -S mysql-workbench
+```
+
+
+
+
+
 ## 前端环境
 
 前端环境列表：  
