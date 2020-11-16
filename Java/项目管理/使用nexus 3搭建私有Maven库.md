@@ -267,7 +267,7 @@ curl -u "$USERNAME:$PASSWORD" -X PUT -v -T {} ${REPO_URL}/{} ;
 ```
 <distributionManagement>
   <repository>
-    <id>local-nexus<id>
+    <id>local-nexus</id>
     <name>common-repo</name>
     <url>http://localhost:8081/repository/common-repo/</url>
   </repository>
