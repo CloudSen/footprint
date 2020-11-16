@@ -227,11 +227,11 @@ curl -u "$USERNAME:$PASSWORD" -X PUT -v -T {} ${REPO_URL}/{} ;
       <id>local-nexus</id>
       <repositories>
         <repository>
-            <id>nexus<id>
+            <id>nexus</id>
             <url>http://localhost:8081/repository/common-repo/</url>
-            <release>
+            <releases>
                 <enabled>true</enabled>
-            </release>
+            </releases>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -241,9 +241,9 @@ curl -u "$USERNAME:$PASSWORD" -X PUT -v -T {} ${REPO_URL}/{} ;
           <pluginRepository>
             <id>nexus</id>
             <url>http://localhost:8081/repository/common-repo/</url>
-            <release>
+            <releases>
                 <enabled>true</enabled>
-            </release>
+            </releases>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -267,14 +267,24 @@ curl -u "$USERNAME:$PASSWORD" -X PUT -v -T {} ${REPO_URL}/{} ;
 ```
 <distributionManagement>
   <repository>
-    <id>local-nexus</id>
+    <id>nexus</id>
     <name>common-repo</name>
     <url>http://localhost:8081/repository/common-repo/</url>
   </repository>
 </distributionManagement>
 ```
 
-然后执行maven的`deploy`命令即可部署到私有库。  
+然后在maven `settings.xml`文件的`servers`标签中加入以下配置（注意id要与pom文件中的对应）：  
+
+```
+<server>
+	<id>nexus</id>
+	<username>admin</username>
+	<password>cloudsen</password>
+</server>
+```
+
+最后执行maven的`deploy`命令即可部署到私有库。  
 
 
 
