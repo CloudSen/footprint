@@ -67,6 +67,12 @@ yay -S mysql-workbench
 
 
 
+# 私有库环境
+
+搭建Maven私有库请看另一篇文章：[传统方式安装nexus3](../../Java/项目管理/传统方式安装nexus3.md)。  
+
+搭建Git私有库请看另一篇文章：[使用GOGS搭建私有GIT库](../../Java/项目管理/使用GOGS搭建私有GIT库.md)。
+
 
 
 ## 前端环境

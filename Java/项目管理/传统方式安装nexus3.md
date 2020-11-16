@@ -4,7 +4,7 @@
 
 ## 预准备
 
-- Linux(本文采用Arch Linux，其他发行版需自行替换相关命令)
+- 支持Systemd的Linux发行版（本文采用Arch Linux，其他发行版需自行替换相关命令）
 - 30分钟+
 
 ## 将获得
