@@ -12,6 +12,7 @@
 - 使用传统安装方式，安装、配置并启动nexus 3 仓库
 - 使用shell脚本，批量上传本地包到私有库
 - 配置Maven Settings文件，让项目下载私有库的包
+- 配置项目pom文件，让项目打包部署到私有库
 
 
 
@@ -65,7 +66,7 @@ sudo vim /etc/systemd/system/nexus.service
 Description=nexus service
 After=network.target
   
-[Service]
+[Service]nexus
 Type=forking
 LimitNOFILE=65536
 ExecStart=/opt/nexus-<你的版本号>/bin/nexus start
@@ -256,6 +257,24 @@ curl -u "$USERNAME:$PASSWORD" -X PUT -v -T {} ${REPO_URL}/{} ;
   </activeProfiles>
 </settings>
 ```
+
+
+
+# 项目打包部署到私有库
+
+在需要部署的项目`pom.xml`文件中加入以下配置：  
+
+```
+<distributionManagement>
+  <repository>
+    <id>local-nexus<id>
+    <name>common-repo</name>
+    <url>http://localhost:8081/repository/common-repo/</url>
+  </repository>
+</distributionManagement>
+```
+
+然后执行maven的`deploy`命令即可部署到私有库。  
 
 
 
