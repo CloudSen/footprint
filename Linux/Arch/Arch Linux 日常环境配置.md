@@ -272,5 +272,26 @@ patch:
 yay okula
 ```
 
+## 连接蓝牙耳机
+
+Arch Linux一般是安装了`bluez`的，若要连接蓝牙耳机还需要安装`pulseaudio-bluetooth`：  
+
+```
+yay pulseaudio-bluetooth
+```
+
+再需要使用蓝牙时，再开启蓝牙服务：  
+
+```
+systemctl start bluetooth
+```
+
+启动pulseaudio服务：  
+
+```
+pulseaudio -k                   # 确保没有pulseaudio启动
+pulseaudio --start              # 启动pulseaudio服务
+```
+
 
 
