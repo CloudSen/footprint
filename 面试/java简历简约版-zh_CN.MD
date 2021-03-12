@@ -44,7 +44,7 @@ WORK IT HARDER, MAKE IT BETTER, DO IT FASTER, MAKE US STRONGER.
 - 某线路筛查系统重构 [贡献100%]
   - 职责：后端开发
 
-## <span style="color:#329ba9">重庆超鲸科技有限公司（2018年11月 ~ 2019年4月）</span>
+## <span style="color:#329ba9">重庆超鲸科技有限公司（2018年8月 ~ 2019年7月）</span>
 
 ***区块链部门***
 
@@ -52,7 +52,7 @@ WORK IT HARDER, MAKE IT BETTER, DO IT FASTER, MAKE US STRONGER.
   - 独自承担从需求->原型->前后端开发->测试->部署的整个流程；
   - 编写Linux shell读取设备信息，并且与JAVA后端进行交互，使用VUE全家桶开发前端；
 
-## <span style="color:#329ba9">重庆春之翼信息科技有限公司（2017年4月 ~ 2018年8月）</span>
+## <span style="color:#329ba9">重庆春之翼信息科技有限公司（2016年10月 ~ 2018年7月）</span>
 
 ***重庆研发部***
 
