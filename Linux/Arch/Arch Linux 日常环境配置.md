@@ -49,6 +49,19 @@ pacman -S gnome-keyring
 ```
 git clone https://aur.archlinux.org/yay.git
 cd yay
+```
+
+设置GO代理：  
+
+```
+export GOPROXY=https://gocenter.io
+export GOPROXY="https://goproxy.io"
+export GOPROXY="https://athens.azurefd.net/"
+```
+
+编译安装：  
+
+```
 makepkg -si
 ```
 
