@@ -306,5 +306,34 @@ pulseaudio -k                   # 确保没有pulseaudio启动
 pulseaudio --start              # 启动pulseaudio服务
 ```
 
+## Axel多线程下载
 
+多线程下载神器，`pacman` 和 `yay` 默认都是单线程下载的，通过 `axel` 实现多线程下载。  
+
+```bash
+yay axel
+```
+
+配置 `pacman.conf` ：  
+
+```bash
+sudo vim /etc/pacman.conf
+    # 配置 XferCommand
+    XferCommand = /usr/bin/axel -a -n 16 %u -o %o
+sudo pacman -Syyu
+```
+
+配置 `makepkg.conf` ，让AUR资源使用多线程：
+
+```bash
+sudo vim /etc/makepkg.conf
+	# 注意http和https的修改
+	DLAGENTS=('file::/usr/bin/curl -gqC - -o %o %u'
+          'ftp::/usr/bin/curl -gqfC - --ftp-pasv --retry 3 --retry-delay 3 -o %o %u'
+          'http::/usr/bin/axel -a -n 16 %u -o %o'
+          'https::/usr/bin/axel -a -n 16 %u -o %o'
+          'rsync::/usr/bin/rsync --no-motd -z %u %o'
+          'scp::/usr/bin/scp -C %u %o')
+yay -Syyu
+```
 
