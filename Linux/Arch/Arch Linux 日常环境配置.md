@@ -337,3 +337,8 @@ sudo vim /etc/makepkg.conf
 yay -Syyu
 ```
 
+## 远程桌面VNC
+
+Windows端安装：TightVNC
+
+Arch端安装：Remmina和libvncserver
