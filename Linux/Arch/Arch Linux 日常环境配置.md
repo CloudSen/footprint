@@ -65,7 +65,16 @@ export GOPROXY="https://athens.azurefd.net/"
 makepkg -si
 ```
 
-彩色输出：将 `/etc/pacman.conf` 文件中 `Color` 的注释去掉。  
+彩色输出：将 `/etc/pacman.conf` 文件中 `Color` 的注释去掉。 
+
+忽略一些yay问题项：  
+
+```
+yay --save --answerclean All --answerdiff None
+yay --save --nocleanmenu --nodiffmenu
+```
+
+ 
 
 ## Arch Linux CN 源
 
